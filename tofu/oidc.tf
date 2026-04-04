@@ -55,6 +55,13 @@ resource "aws_iam_role_policy" "spa_deploy" {
           "s3:ListBucket",
         ]
         Resource = aws_s3_bucket.spa.arn
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "cloudfront:CreateInvalidation",
+        ]
+        Resource = aws_cloudfront_distribution.spa.arn
       }
     ]
   })

@@ -3,9 +3,14 @@ output "bucket_name" {
   value       = aws_s3_bucket.spa.id
 }
 
-output "bucket_website_url" {
-  description = "S3 website endpoint URL"
-  value       = aws_s3_bucket_website_configuration.spa.website_endpoint
+output "cloudfront_domain" {
+  description = "CloudFront distribution domain name"
+  value       = aws_cloudfront_distribution.spa.domain_name
+}
+
+output "cloudfront_distribution_id" {
+  description = "CloudFront distribution ID"
+  value       = aws_cloudfront_distribution.spa.id
 }
 
 output "role_arn" {

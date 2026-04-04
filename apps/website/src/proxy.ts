@@ -67,21 +67,20 @@ function rewriteToSpa(
   request: NextRequest,
   pathname: string,
   devPort: number,
-  basePath: string,
+  devBasePath: string,
+  prodFolder: string,
 ): NextResponse {
   const isDev = process.env.NODE_ENV === "development"
-  const spaOrigin = isDev
-    ? `http://localhost:${devPort}`
-    : "http://nextjs-spa-split.s3-website-us-east-1.amazonaws.com"
+  const spaOrigin = isDev ? `http://localhost:${devPort}` : "https://d1i66hf38xpie.cloudfront.net"
 
   const spaUrl = new URL(pathname, spaOrigin)
   spaUrl.search = request.nextUrl.search
 
   if (!isAssetRequest(pathname)) {
     if (isDev) {
-      spaUrl.pathname = `${basePath}/`
+      spaUrl.pathname = `${devBasePath}/`
     } else {
-      spaUrl.pathname = `${basePath}/index.html`
+      spaUrl.pathname = `${prodFolder}/index.html`
     }
   }
 
@@ -100,11 +99,11 @@ export function proxy(request: NextRequest) {
 
   // Admin SPA — requires auth + isAdmin, checked in the SPA via /api/v1/auth/me
   if (pathname === SPA_ADMIN.prefix || pathname.startsWith(`${SPA_ADMIN.prefix}/`)) {
-    return rewriteToSpa(request, pathname, SPA_ADMIN.devPort, "/admin")
+    return rewriteToSpa(request, pathname, SPA_ADMIN.devPort, "/admin", "/admin")
   }
 
   // Everything else → Dashboard SPA (auth checked in SPA via /api/v1/auth/me)
-  return rewriteToSpa(request, pathname, DASHBOARD_DEV_PORT, "")
+  return rewriteToSpa(request, pathname, DASHBOARD_DEV_PORT, "", "/dashboard")
 }
 
 export const config = {
