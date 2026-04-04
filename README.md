@@ -1,5 +1,7 @@
 # Next.js SPA Split
 
+Example at https://nextjs-spa-split.andrewcwang.com
+
 Tutorial for mixing Next.js with SPAs at different endpoints, namely the SPA being
 utilized for authenticated dashboard and Next.js for unauthenticated.
 

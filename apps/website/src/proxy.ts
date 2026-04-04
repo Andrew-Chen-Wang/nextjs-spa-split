@@ -70,7 +70,9 @@ function rewriteToSpa(
   basePath: string,
 ): NextResponse {
   const isDev = process.env.NODE_ENV === "development"
-  const spaOrigin = isDev ? `http://localhost:${devPort}` : (process.env.SPA_ORIGIN ?? "")
+  const spaOrigin = isDev
+    ? `http://localhost:${devPort}`
+    : "http://nextjs-spa-split.s3-website-us-east-1.amazonaws.com"
 
   const spaUrl = new URL(pathname, spaOrigin)
   spaUrl.search = request.nextUrl.search
@@ -106,5 +108,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon\\..*).*)"],
 }
