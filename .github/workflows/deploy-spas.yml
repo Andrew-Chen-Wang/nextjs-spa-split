@@ -57,7 +57,7 @@ jobs:
       - name: Cache for Turbo
         uses: rharkor/caching-for-turbo@v2.3.11
       - name: Build Dashboard
-        run: turbo run build --filter=dashboard
+        run: pnpm exec turbo run build --filter=dashboard
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -92,7 +92,7 @@ jobs:
       - name: Cache for Turbo
         uses: rharkor/caching-for-turbo@v2.3.11
       - name: Build Admin
-        run: turbo run build --filter=admin
+        run: pnpm exec turbo run build --filter=admin
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
