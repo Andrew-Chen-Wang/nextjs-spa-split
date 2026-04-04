@@ -8,6 +8,16 @@ on:
       - "apps/admin/**"
       - "lib/typescript/ui/**"
       - "lib/typescript/api-client/**"
+  workflow_dispatch:
+    inputs:
+      spa:
+        description: "Which SPA to deploy"
+        required: true
+        type: choice
+        options:
+          - all
+          - dashboard
+          - admin
 
 env:
   NPM_CONFIG_FUND: false
@@ -19,6 +29,7 @@ permissions:
 jobs:
   changes:
     name: Detect Changes
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     outputs:
       dashboard: ${{ steps.filter.outputs.dashboard }}
@@ -41,7 +52,11 @@ jobs:
   deploy-dashboard:
     name: Deploy Dashboard
     needs: changes
-    if: needs.changes.outputs.dashboard == 'true'
+    if: |
+      always() && (
+        (github.event_name == 'workflow_dispatch' && (inputs.spa == 'dashboard' || inputs.spa == 'all')) ||
+        (github.event_name == 'push' && needs.changes.outputs.dashboard == 'true')
+      )
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -76,7 +91,11 @@ jobs:
   deploy-admin:
     name: Deploy Admin
     needs: changes
-    if: needs.changes.outputs.admin == 'true'
+    if: |
+      always() && (
+        (github.event_name == 'workflow_dispatch' && (inputs.spa == 'admin' || inputs.spa == 'all')) ||
+        (github.event_name == 'push' && needs.changes.outputs.admin == 'true')
+      )
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
