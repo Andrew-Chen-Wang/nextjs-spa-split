@@ -1,6 +1,5 @@
 import { QueryClient } from "@tanstack/react-query"
-import { client } from "@website/services/client/client.gen"
-import { ErrorResponseT } from "@website/services/client/types.gen"
+import { ErrorResponseT } from "@lib/api-client/generated/types.gen"
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,5 +17,3 @@ export const queryClient = new QueryClient({
     },
   },
 })
-
-client.setConfig({ baseUrl: process.env.NEXT_PUBLIC_HOST_URL })

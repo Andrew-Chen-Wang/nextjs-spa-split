@@ -8,6 +8,36 @@ have to go to `app.domain.com` and the preferred outcome is that the user is alw
 on `domain.com`. An example of this is Facebook.com. They have different dashboards
 all under `facebook.com` with different base route segments.
 
+## Usage
+
+This project template includes an admin and dashboard served via SPA only to authenticated
+(and authorized for admin) users. React Vite hot-reloading also works.
+
+First, copy the `.template.env` file to `.env` and fill out the rest of the variables.
+Second, run the following:
+
+```shell
+pnpm install
+docker compose up -d
+pnpm run -C apps/dbmigrator migrate:up
+lefthook install
+pnpm run dev
+```
+
+Production configuration is also set up via OpenTofu (see the [tofu](./tofu) directory).
+It simply sets up IAM permission to deploy the SPA assets to an S3 bucket, and the smart
+deployment happens in GitHub Actions with IAM + GitHub Actions OIDC.
+
+To set up, you'll need IAM credentials that can create the above resources.
+
+```shell
+brew bundle
+tofu plan
+tofu apply
+```
+
+For the NextJS app, we're simply going to use Vercel.
+
 ## Context
 
 Next.js and Vercel have been very useful in deploying applications quickly. Next.js is

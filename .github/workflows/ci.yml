@@ -28,7 +28,7 @@ jobs:
         run: pnpm run format --check
 
   build:
-    name: Website Build, Lint, and Test Full Repo
+    name: Build, Lint, and Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -43,8 +43,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Cache for Turbo
+        uses: rharkor/caching-for-turbo@v2.3.11
+
       - name: Build
-        working-directory: apps/website
         run: pnpm run build
 
       - name: Lint

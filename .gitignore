@@ -40,3 +40,13 @@ next-env.d.ts
 **/dist/**
 
 lefthook-local.yml
+
+# turborepo
+.turbo
+
+# opentofu
+tofu/.terraform/
+tofu/.terraform.lock.hcl
+
+# tanstack router
+**/routeTree.gen.ts

@@ -14,7 +14,6 @@
     "jsx": "preserve",
     "allowImportingTsExtensions": false,
     "incremental": true,
-    "composite": true,
     "plugins": [
       {
         "name": "next"
@@ -23,7 +22,9 @@
     "paths": {
       "@website/*": ["./src/*"],
       "@template-nextjs/db/*": ["../../packages/db/src/*"],
-      "@lib/dao/*": ["../../lib/typescript/dao/src/*"]
+      "@lib/dao/*": ["../../lib/typescript/dao/src/*"],
+      "@ui/components/*": ["../../lib/typescript/ui/components/src/*"],
+      "@lib/api-client/*": ["../../lib/typescript/api-client/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

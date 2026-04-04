@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
+    "noEmit": true,
+    "target": "ESNext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "composite": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

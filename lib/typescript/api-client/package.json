@@ -1,0 +1,23 @@
+{
+  "name": "@lib/api-client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "openapi": "cd ../../.. && openapi-ts --file .config/openapi-ts.config.ts --no-log-file && pnpm run format"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.96.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19"
+  },
+  "peerDependencies": {
+    "react": "^19.2.4"
+  }
+}

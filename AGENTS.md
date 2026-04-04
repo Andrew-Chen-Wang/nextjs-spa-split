@@ -7,6 +7,10 @@ pnpm install
 # Start development server (website + API)
 pnpm run dev --workspace=website
 
+# Start SPA dev servers (separate terminals)
+pnpm run dev --workspace=dashboard    # Dashboard SPA on port 3001
+pnpm run dev --workspace=admin        # Admin SPA on port 3002
+
 # Run all tests
 pnpm test
 
@@ -35,12 +39,16 @@ This is a TypeScript monorepo with npm workspaces:
 
 **Apps:**
 
-- `apps/website` - Next.js frontend with Tailwind/ShadCN UI. API routes are proxied through `/api`
+- `apps/website` - Next.js frontend with Tailwind/ShadCN UI. API routes are proxied through `/api`. Proxy (middleware) handles auth + rewrites for SPA routes
 - `apps/internal-api` - Hono API with TypeBox schemas and OpenAPI generation. Mounted at `/api` via Next.js
+- `apps/dashboard` - React SPA (Vite + TanStack Router) served at `/dashboard`. Requires authentication
+- `apps/admin` - React SPA (Vite + TanStack Router) served at `/admin`. Requires authentication + is_admin
 - `apps/dbmigrator` - Kysely database migrations
 
 **Packages:**
 
 - `packages/db` - Kysely database client and generated types (`@queryme/db`)
 - `lib/typescript/dao` - Data access objects shared between API and website (`@lib/dao`)
+- `lib/typescript/api-client` - Hey-API generated client code shared between website and SPAs (`@lib/api-client`)
+- `lib/typescript/ui/components` - Shared ShadCN UI components and theme (`@ui/components`)
 - `lib/typescript/utils/*` - Utility libraries (e.g., `@utils/numbers`)

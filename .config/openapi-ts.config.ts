@@ -4,7 +4,7 @@ export default defineConfig({
   input: "http://localhost:3000/api/openapi",
   output: {
     indexFile: false,
-    path: "apps/website/src/services/client",
+    path: "lib/typescript/api-client/src/generated",
   },
   plugins: [
     "@hey-api/client-fetch",
