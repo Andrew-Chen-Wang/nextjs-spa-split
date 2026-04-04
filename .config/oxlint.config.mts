@@ -34,6 +34,7 @@ export default defineConfig({
     "apps/dashboard/postcss.config.js",
     "apps/admin/postcss.config.js",
     "lib/typescript/api-client/src/generated/**",
+    "**/routeTree.gen.ts",
   ],
   rules: {
     "typescript/await-thenable": "error",

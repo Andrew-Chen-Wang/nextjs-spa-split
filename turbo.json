@@ -3,7 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**"],
+      "outputs": [".next/**", "dist/**", "src/routeTree.gen.ts"],
       "inputs": ["src/**", "index.html", "vite.config.ts", "tsconfig.json", "postcss.config.js"]
     },
     "dev": {
