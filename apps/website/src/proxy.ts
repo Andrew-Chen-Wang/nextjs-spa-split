@@ -1,11 +1,57 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
+import { validateSessionToken } from "./lib/auth"
 
 /** Public paths handled by Next.js — everything else goes to the dashboard SPA */
 const NEXTJS_PUBLIC_PREFIXES = ["/login", "/blog", "/api", "/legal"]
 
 /** Exact public paths */
 const NEXTJS_PUBLIC_EXACT = ["/"]
+
+type SharedRoute = { path: string; spa: "dashboard" | "admin" }
+
+/** Routes that serve Next.js for unauthenticated users, SPA for authenticated users.
+ *  Paths use Next.js conventions: [param], [...catchAll], [[...optionalCatchAll]] */
+const SHARED_ROUTES: SharedRoute[] = [
+  { path: "/posting", spa: "dashboard" },
+  { path: "/posting/[id]", spa: "dashboard" },
+]
+
+/** Match a URL pathname against a route pattern.
+ *  - Static segments: exact match
+ *  - [param]: matches exactly one segment
+ *  - [...catchAll]: matches one or more segments (must be last)
+ *  - [[...optionalCatchAll]]: matches zero or more segments (must be last)
+ */
+function matchRoute(pattern: string, pathname: string): boolean {
+  const patternSegs = pattern.split("/").filter(Boolean)
+  const pathSegs = pathname.split("/").filter(Boolean)
+
+  for (let i = 0; i < patternSegs.length; i++) {
+    const seg = patternSegs[i]
+
+    if (seg.startsWith("[[...") && seg.endsWith("]]")) {
+      return true
+    }
+
+    if (seg.startsWith("[...") && seg.endsWith("]")) {
+      return pathSegs.length > i
+    }
+
+    if (seg.startsWith("[") && seg.endsWith("]")) {
+      if (i >= pathSegs.length) return false
+      continue
+    }
+
+    if (i >= pathSegs.length || pathSegs[i] !== seg) return false
+  }
+
+  return pathSegs.length === patternSegs.length
+}
+
+function findSharedRoute(pathname: string): SharedRoute | undefined {
+  return SHARED_ROUTES.find((r) => matchRoute(r.path, pathname))
+}
 
 const SPA_ADMIN = {
   prefix: "/admin",
@@ -87,8 +133,27 @@ function rewriteToSpa(
   return NextResponse.rewrite(spaUrl)
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // Shared routes — check auth, rewrite to SPA or fall through to Next.js
+  const sharedRoute = findSharedRoute(pathname)
+  if (sharedRoute) {
+    const token = request.cookies.get("session")?.value ?? null
+    if (token !== null) {
+      const result = await validateSessionToken(token)
+      if (result !== null) {
+        if (sharedRoute.spa === "admin") {
+          return rewriteToSpa(request, pathname, SPA_ADMIN.devPort, "/admin", "/admin")
+        }
+        return rewriteToSpa(request, pathname, DASHBOARD_DEV_PORT, "", "/dashboard")
+      }
+    }
+    // No valid session → serve Next.js SSR page
+    const csrfResult = handleCsrfAndCookies(request)
+    if (csrfResult) return csrfResult
+    return NextResponse.next()
+  }
 
   // Next.js public routes — pass through with CSRF/cookie handling
   if (isNextJsRoute(pathname)) {
