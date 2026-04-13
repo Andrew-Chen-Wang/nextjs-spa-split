@@ -114,6 +114,41 @@ describe.each(adminPages)("shared admin route %s", (pattern) => {
     expect(isRewrite(res)).toBe(true)
     expect(getRewrittenUrl(res)).toContain("/admin")
   })
+
+  it("no session → redirect to /login", async () => {
+    const res = await proxy(makeRequest(url))
+    expect(isRewrite(res)).toBe(false)
+    expect(res.headers.get("location")).toContain("/login")
+  })
+
+  it("invalid session → redirect to /login", async () => {
+    mockValidate.mockResolvedValueOnce(null)
+    const res = await proxy(makeRequest(url, "bad"))
+    expect(isRewrite(res)).toBe(false)
+    expect(res.headers.get("location")).toContain("/login")
+  })
+})
+
+describe("default fallback (non-public, non-shared route)", () => {
+  it("no session → redirect to /login", async () => {
+    const res = await proxy(makeRequest("/settings"))
+    expect(isRewrite(res)).toBe(false)
+    expect(res.headers.get("location")).toContain("/login")
+  })
+
+  it("valid session → rewrite to dashboard SPA", async () => {
+    mockValidate.mockResolvedValueOnce(VALID_SESSION)
+    const res = await proxy(makeRequest("/settings", "tok"))
+    expect(isRewrite(res)).toBe(true)
+    expect(getRewrittenUrl(res)).toContain("/dashboard")
+  })
+
+  it("invalid session → redirect to /login", async () => {
+    mockValidate.mockResolvedValueOnce(null)
+    const res = await proxy(makeRequest("/settings", "bad"))
+    expect(isRewrite(res)).toBe(false)
+    expect(res.headers.get("location")).toContain("/login")
+  })
 })
 
 describe("adding a new page to (dashboard) without updating SHARED_ROUTES", () => {
@@ -137,11 +172,9 @@ describe("adding a new page to (dashboard) without updating SHARED_ROUTES", () =
     expect(routes).toContain("/test-unregistered")
   })
 
-  it("unauthenticated request gets SPA rewrite instead of Next.js SSR", async () => {
-    // This demonstrates the bug: the page exists in (dashboard)/ but is not
-    // in SHARED_ROUTES, so unauthenticated users get the dashboard SPA
-    // catch-all instead of the Next.js SSR page.
+  it("unauthenticated request redirects to /login", async () => {
     const res = await proxy(makeRequest("/test-unregistered"))
-    expect(isRewrite(res)).toBe(true) // wrong — should be false if registered
+    expect(isRewrite(res)).toBe(false)
+    expect(res.headers.get("location")).toContain("/login")
   })
 })

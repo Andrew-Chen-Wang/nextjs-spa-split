@@ -162,13 +162,27 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Admin SPA — requires auth + isAdmin, checked in the SPA via /api/v1/auth/me
+  // Admin SPA — requires auth
   if (pathname === SPA_ADMIN.prefix || pathname.startsWith(`${SPA_ADMIN.prefix}/`)) {
-    return rewriteToSpa(request, pathname, SPA_ADMIN.devPort, "/admin", "/admin")
+    const token = request.cookies.get("session")?.value ?? null
+    if (token !== null) {
+      const result = await validateSessionToken(token)
+      if (result !== null) {
+        return rewriteToSpa(request, pathname, SPA_ADMIN.devPort, "/admin", "/admin")
+      }
+    }
+    return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  // Everything else → Dashboard SPA (auth checked in SPA via /api/v1/auth/me)
-  return rewriteToSpa(request, pathname, DASHBOARD_DEV_PORT, "", "/dashboard")
+  // Everything else → Dashboard SPA if authenticated, otherwise redirect to login
+  const token = request.cookies.get("session")?.value ?? null
+  if (token !== null) {
+    const result = await validateSessionToken(token)
+    if (result !== null) {
+      return rewriteToSpa(request, pathname, DASHBOARD_DEV_PORT, "", "/dashboard")
+    }
+  }
+  return NextResponse.redirect(new URL("/login", request.url))
 }
 
 export const config = {
