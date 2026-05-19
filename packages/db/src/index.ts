@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url"
 import dotenv from "dotenv"
 import { CamelCasePlugin, Kysely, PostgresDialect } from "kysely"
 import pg from "pg"
-import type { DB } from "./types.ts"
+import type { DB } from "./types"
 
 // Re-define __dirname since we are using JS when generating OpenAPI specs in apps/internal-api
 const __filename = fileURLToPath(import.meta.url)

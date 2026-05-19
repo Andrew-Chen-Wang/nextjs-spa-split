@@ -1,16 +1,26 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["esnext"],
     "types": ["node"],
-    "strict": true,
-    "noEmit": true,
-    "target": "ESNext",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "jsx": "react-jsx",
+    "allowJs": true,
     "skipLibCheck": true,
+    "strict": true,
+    "noEmit": false,
+    "composite": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "isolatedModules": true,
-    "composite": true
+    "jsx": "preserve",
+    "incremental": true,
+    "allowImportingTsExtensions": false,
+    "paths": {},
+    "rootDir": "./src",
+    "outDir": "./build"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "build"]
 }

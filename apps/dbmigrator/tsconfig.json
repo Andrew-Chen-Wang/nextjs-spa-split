@@ -1,20 +1,21 @@
 {
   "compilerOptions": {
     "lib": ["esnext"],
-    "target": "ESNext",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "ESNext",
+    "target": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "allowImportingTsExtensions": false,
     "paths": {
-      "@dbmigrator/*": ["./src/*", "./.config/*"]
+      "@dbmigrator/*": ["./src/*"]
     },
     "rootDir": "./src",
     "outDir": "./build"

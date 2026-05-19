@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "lib": ["esnext"],
-    "target": "ESNext",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "noEmit": false,
     "esModuleInterop": true,
     "module": "ESNext",
+    "target": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -24,6 +25,6 @@
     "declaration": true
   },
   "include": ["**/*.ts", "**/*.json"],
-  "exclude": ["node_modules"],
-  "references": [{ "path": "../../lib/typescript/dao" }]
+  "exclude": ["node_modules", "build"],
+  "references": [{ "path": "../../packages/db" }, { "path": "../../lib/typescript/dao" }]
 }
