@@ -6,7 +6,7 @@ import { validateSessionToken } from "./lib/auth"
 const NEXTJS_PUBLIC_PREFIXES = ["/login", "/blog", "/api", "/legal"]
 
 /** Exact public paths */
-const NEXTJS_PUBLIC_EXACT = ["/"]
+const NEXTJS_PUBLIC_EXACT = new Set(["/"])
 
 type SharedRoute = { path: string; spa: "dashboard" | "admin" }
 
@@ -61,7 +61,7 @@ const SPA_ADMIN = {
 const DASHBOARD_DEV_PORT = 3001
 
 function isNextJsRoute(pathname: string): boolean {
-  if (NEXTJS_PUBLIC_EXACT.includes(pathname)) return true
+  if (NEXTJS_PUBLIC_EXACT.has(pathname)) return true
   return NEXTJS_PUBLIC_PREFIXES.some((prefix) => pathname.startsWith(prefix))
 }
 

@@ -16,6 +16,8 @@ export default defineConfig({
   ],
   categories: {
     correctness: "error",
+    suspicious: "warn",
+    perf: "warn",
   },
   options: {
     typeAware: true,
@@ -37,6 +39,7 @@ export default defineConfig({
     "**/routeTree.gen.ts",
   ],
   rules: {
+    "typescript/no-unsafe-type-assertion": "off",
     "typescript/await-thenable": "error",
     "typescript/no-array-delete": "error",
     "typescript/no-base-to-string": "error",
@@ -94,33 +97,20 @@ export default defineConfig({
     "typescript/prefer-nullish-coalescing": "error",
     "typescript/prefer-regexp-exec": "error",
     "typescript/prefer-string-starts-ends-with": "error",
+    "import/no-unassigned-import": ["warn", { allow: ["**/*.css"] }],
   },
   overrides: [
     {
       files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       rules: {
-        "constructor-super": "off",
-        "no-class-assign": "off",
-        "no-const-assign": "off",
-        "no-dupe-class-members": "off",
-        "no-dupe-keys": "off",
-        "no-func-assign": "off",
-        "no-import-assign": "off",
-        "no-new-native-nonconstructor": "off",
-        "no-obj-calls": "off",
-        "no-redeclare": "off",
-        "no-setter-return": "off",
-        "no-this-before-super": "off",
-        "no-unsafe-negation": "off",
         "no-var": "error",
-        "no-with": "off",
         "prefer-const": "error",
         "prefer-rest-params": "error",
         "prefer-spread": "error",
       },
     },
     {
-      files: ["apps/website/**/*.tsx", "apps/dashboard/**/*.tsx", "apps/admin/**/*.tsx"],
+      files: ["**/apps/website/**/*.tsx", "**/apps/dashboard/**/*.tsx", "**/apps/admin/**/*.tsx"],
       rules: {
         "react/react-in-jsx-scope": "off",
       },

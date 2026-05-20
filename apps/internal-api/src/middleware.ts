@@ -33,7 +33,7 @@ export async function getSession(
     return session
   } catch {
     // Typically this means we're unable to connect to the database
-    throwHTTPException(503, ErrorCode.ServiceUnavailable, "Service unavailable")
+    return throwHTTPException(503, ErrorCode.ServiceUnavailable, "Service unavailable")
   }
 }
 

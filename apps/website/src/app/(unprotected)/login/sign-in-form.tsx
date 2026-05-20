@@ -5,7 +5,7 @@ import { Button } from "@ui/components/ui/button"
 import { Checkbox } from "@ui/components/ui/checkbox"
 import { Label } from "@ui/components/ui/label"
 import Link from "next/link"
-import { useId, useState } from "react"
+import { useCallback, useId, useState } from "react"
 import { oauthRedirect } from "./actions"
 
 export function SignInForm() {
@@ -13,14 +13,20 @@ export function SignInForm() {
   const [agreedToTerms, setAgreedToTerms] = useState(false)
   const termsId = useId()
 
-  const googleSubmit = async () => {
-    if (!agreedToTerms) {
-      setSignInError("Please agree to the terms and conditions to continue")
-      return
+  const handleTermsChange = useCallback((checked: boolean | "indeterminate") => {
+    setAgreedToTerms(checked as boolean)
+  }, [])
+
+  const handleGoogleClick = useCallback(() => {
+    const googleSubmit = async () => {
+      if (!agreedToTerms) {
+        setSignInError("Please agree to the terms and conditions to continue")
+        return
+      }
+      await oauthRedirect("/login/google")
     }
-    await oauthRedirect("/login/google")
-    return
-  }
+    googleSubmit().catch(console.error)
+  }, [agreedToTerms])
 
   return (
     <div className="grid gap-6">
@@ -29,13 +35,7 @@ export function SignInForm() {
       )}
 
       <div className="flex items-center flex-row gap-x-2 mb-4">
-        <Checkbox
-          id={termsId}
-          checked={agreedToTerms}
-          onCheckedChange={(checked) => {
-            setAgreedToTerms(checked as boolean)
-          }}
-        />
+        <Checkbox id={termsId} checked={agreedToTerms} onCheckedChange={handleTermsChange} />
         <Label htmlFor={termsId} className="text-sm">
           <p>
             I agree to the{" "}
@@ -54,14 +54,7 @@ export function SignInForm() {
         </Label>
       </div>
 
-      <Button
-        variant="outline"
-        type="button"
-        disabled={!agreedToTerms}
-        onClick={() => {
-          googleSubmit().catch(console.error)
-        }}
-      >
+      <Button variant="outline" type="button" disabled={!agreedToTerms} onClick={handleGoogleClick}>
         <Icons.google className="mr-2 h-4 w-4" /> Google
       </Button>
     </div>

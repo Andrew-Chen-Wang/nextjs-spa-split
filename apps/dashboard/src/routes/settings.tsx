@@ -4,6 +4,7 @@ import { Checkbox } from "@ui/components/ui/checkbox"
 import { Label } from "@ui/components/ui/label"
 import { postApiV1AuthLogoutMutation } from "@lib/api-client/generated/@tanstack/react-query.gen"
 import { createFileRoute } from "@tanstack/react-router"
+import { useCallback } from "react"
 
 export const Route = createFileRoute("/settings")({
   component: SettingsPage,
@@ -16,6 +17,10 @@ function SettingsPage() {
       window.location.href = `${import.meta.env.VITE_NEXTJS_URL ?? ""}/`
     },
   })
+
+  const handleLogout = useCallback(() => {
+    void logoutMutation.mutateAsync({})
+  }, [logoutMutation])
 
   return (
     <div>
@@ -38,13 +43,7 @@ function SettingsPage() {
       <div className="mt-8 max-w-md rounded-lg border border-destructive/50 bg-card p-6">
         <h2 className="mb-2 text-lg font-semibold">Logout</h2>
         <p className="mb-4 text-sm text-muted-foreground">Sign out of your account.</p>
-        <Button
-          variant="destructive"
-          disabled={logoutMutation.isPending}
-          onClick={() => {
-            void logoutMutation.mutateAsync({})
-          }}
-        >
+        <Button variant="destructive" disabled={logoutMutation.isPending} onClick={handleLogout}>
           {logoutMutation.isPending ? "Logging out..." : "Logout"}
         </Button>
       </div>
