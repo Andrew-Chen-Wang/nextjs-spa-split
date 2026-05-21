@@ -26,6 +26,16 @@ export default defineConfig(({ mode }) => ({
       ],
     }),
   ],
+  optimizeDeps: {
+    entries: [
+      "index.html",
+      "src/**/*.{ts,tsx}",
+      "../../../lib/typescript/ui/base/src/**/*.{ts,tsx}",
+      "../../../lib/typescript/ui/spa-shared/src/**/*.{ts,tsx}",
+      "../../../lib/typescript/ui/seo-shared/src/**/*.{ts,tsx}",
+      "../../../lib/typescript/api-client/src/**/*.{ts,tsx}",
+    ],
+  },
   server: {
     port: 3001,
   },

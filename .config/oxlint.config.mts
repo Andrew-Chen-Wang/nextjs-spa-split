@@ -109,7 +109,7 @@ export default defineConfig({
       },
     },
     {
-      files: ["**/apps/website/**/*.tsx", "**/apps/frontends/dashboard/**/*.tsx", "**/apps/frontends/admin/**/*.tsx"],
+      files: ["**/apps/website/**/*.tsx", "**/apps/frontends/**/*.tsx"],
       rules: {
         "react/react-in-jsx-scope": "off",
       },
