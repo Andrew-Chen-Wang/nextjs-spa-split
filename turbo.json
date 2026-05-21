@@ -5,7 +5,7 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "dist/**", "src/routeTree.gen.ts"],
       "inputs": ["src/**", "index.html", "vite.config.ts", "tsconfig.json", "postcss.config.js"],
-      "passThroughEnv": ["DATABASE_URL"]
+      "passThroughEnv": ["NEXT_PHASE", "DATABASE_URL"]
     },
     "dev": {
       "dependsOn": ["^build"],

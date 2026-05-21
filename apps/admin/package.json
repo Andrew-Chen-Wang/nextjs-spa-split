@@ -19,11 +19,13 @@
     "tailwindcss": "catalog:"
   },
   "devDependencies": {
+    "@rolldown/plugin-babel": "catalog:",
     "@tailwindcss/postcss": "catalog:",
     "@tanstack/router-plugin": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
+    "babel-plugin-react-compiler": "catalog:",
     "postcss": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
