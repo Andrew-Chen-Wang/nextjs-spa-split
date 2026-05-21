@@ -12,8 +12,8 @@ const fontsourceFiles = (pkg: string) =>
     `../../lib/typescript/ui/base/node_modules/@fontsource-variable/${pkg}/files/*.woff2`,
   )
 
-export default defineConfig({
-  base: "/",
+export default defineConfig(({ mode }) => ({
+  base: mode === "production" ? "https://d1i66hf38xpie.cloudfront.net/dashboard/" : "/",
   plugins: [
     tanstackRouter({ quoteStyle: "double" }),
     react(),
@@ -29,4 +29,4 @@ export default defineConfig({
   server: {
     port: 3001,
   },
-})
+}))
