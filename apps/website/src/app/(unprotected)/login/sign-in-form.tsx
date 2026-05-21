@@ -1,9 +1,9 @@
 "use client"
 
 import { Icons } from "@website/components/icons"
-import { Button } from "@ui/components/ui/button"
-import { Checkbox } from "@ui/components/ui/checkbox"
-import { Label } from "@ui/components/ui/label"
+import { Button } from "@ui/base/ui/button"
+import { Checkbox } from "@ui/base/ui/checkbox"
+import { Label } from "@ui/base/ui/label"
 import Link from "next/link"
 import { useCallback, useId, useState } from "react"
 import { oauthRedirect } from "./actions"

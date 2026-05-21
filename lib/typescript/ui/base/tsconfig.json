@@ -16,7 +16,7 @@
     "rootDir": "./src",
     "outDir": "./build",
     "paths": {
-      "@ui/components/*": ["./src/*"]
+      "@ui/base/*": ["./src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],

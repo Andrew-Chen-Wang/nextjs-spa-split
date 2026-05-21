@@ -1,4 +1,4 @@
-import { Button } from "@ui/components/ui/button"
+import { Button } from "@ui/base/ui/button"
 import { getCurrentSession } from "@website/lib/auth"
 import Link from "next/link"
 import { redirect } from "next/navigation"

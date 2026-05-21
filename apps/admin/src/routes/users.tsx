@@ -1,4 +1,4 @@
-import { Button } from "@ui/components/ui/button"
+import { Button } from "@ui/base/ui/button"
 import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/users")({

@@ -12,7 +12,8 @@
     "@lib/api-client": "workspace:*",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-router": "catalog:",
-    "@ui/components": "workspace:*",
+    "@ui/base": "workspace:*",
+    "@ui/spa-shared": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:"

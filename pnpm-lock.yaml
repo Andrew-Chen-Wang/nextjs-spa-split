@@ -150,9 +150,12 @@ importers:
       '@tanstack/react-router':
         specifier: 'catalog:'
         version: 1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@ui/components':
+      '@ui/base':
         specifier: workspace:*
-        version: link:../../lib/typescript/ui/components
+        version: link:../../lib/typescript/ui/base
+      '@ui/spa-shared':
+        specifier: workspace:*
+        version: link:../../lib/typescript/ui/spa-shared
       react:
         specifier: 'catalog:'
         version: 19.2.6
@@ -199,9 +202,12 @@ importers:
       '@tanstack/react-router':
         specifier: 'catalog:'
         version: 1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@ui/components':
+      '@ui/base':
         specifier: workspace:*
-        version: link:../../lib/typescript/ui/components
+        version: link:../../lib/typescript/ui/base
+      '@ui/spa-shared':
+        specifier: workspace:*
+        version: link:../../lib/typescript/ui/spa-shared
       react:
         specifier: 'catalog:'
         version: 19.2.6
@@ -325,9 +331,12 @@ importers:
       '@template-nextjs/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@ui/components':
+      '@ui/base':
         specifier: workspace:*
-        version: link:../../lib/typescript/ui/components
+        version: link:../../lib/typescript/ui/base
+      '@ui/seo-shared':
+        specifier: workspace:*
+        version: link:../../lib/typescript/ui/seo-shared
       arctic:
         specifier: ^3.7.0
         version: 3.7.0
@@ -428,7 +437,7 @@ importers:
         specifier: 'catalog:'
         version: 14.0.0
 
-  lib/typescript/ui/components:
+  lib/typescript/ui/base:
     dependencies:
       '@radix-ui/react-checkbox':
         specifier: 'catalog:'
@@ -457,6 +466,51 @@ importers:
       tailwind-merge:
         specifier: 'catalog:'
         version: 3.6.0
+
+  lib/typescript/ui/seo-shared:
+    dependencies:
+      '@lib/api-client':
+        specifier: workspace:*
+        version: link:../../api-client
+      '@tanstack/react-query':
+        specifier: 'catalog:'
+        version: 5.100.11(react@19.2.6)
+      '@template-nextjs/db':
+        specifier: workspace:*
+        version: link:../../../../packages/db
+      '@ui/base':
+        specifier: workspace:*
+        version: link:../base
+      lucide-react:
+        specifier: 'catalog:'
+        version: 1.16.0(react@19.2.6)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.6
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.6(react@19.2.6)
+
+  lib/typescript/ui/spa-shared:
+    dependencies:
+      '@lib/api-client':
+        specifier: workspace:*
+        version: link:../../api-client
+      '@tanstack/react-router':
+        specifier: 'catalog:'
+        version: 1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@ui/base':
+        specifier: workspace:*
+        version: link:../base
+      lucide-react:
+        specifier: 'catalog:'
+        version: 1.16.0(react@19.2.6)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.6
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.6(react@19.2.6)
 
   lib/typescript/utils/numbers: {}
 

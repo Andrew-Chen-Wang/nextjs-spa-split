@@ -25,7 +25,8 @@
       "@website/*": ["./src/*"],
       "@template-nextjs/db/*": ["../../packages/db/src/*"],
       "@lib/dao/*": ["../../lib/typescript/dao/src/*"],
-      "@ui/components/*": ["../../lib/typescript/ui/components/src/*"],
+      "@ui/base/*": ["../../lib/typescript/ui/base/src/*"],
+      "@ui/seo-shared/*": ["../../lib/typescript/ui/seo-shared/src/*"],
       "@lib/api-client/*": ["../../lib/typescript/api-client/src/*"]
     }
   },
@@ -35,7 +36,8 @@
     { "path": "../internal-api" },
     { "path": "../../packages/db" },
     { "path": "../../lib/typescript/dao" },
-    { "path": "../../lib/typescript/ui/components" },
+    { "path": "../../lib/typescript/ui/base" },
+    { "path": "../../lib/typescript/ui/seo-shared" },
     { "path": "../../lib/typescript/api-client" }
   ]
 }

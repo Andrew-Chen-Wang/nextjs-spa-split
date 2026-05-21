@@ -3,20 +3,22 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "strict": true,
     "noImplicitReturns": true,
-    "noEmit": true,
+    "noEmit": false,
     "target": "ESNext",
     "module": "esnext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "skipLibCheck": true,
     "isolatedModules": true,
+    "composite": true,
+    "declaration": true,
     "allowImportingTsExtensions": false,
+    "rootDir": "./src",
+    "outDir": "./build",
     "paths": {
-      "@dashboard/*": ["./src/*"],
-      "@ui/base/*": ["../../lib/typescript/ui/base/src/*"],
-      "@ui/spa-shared/*": ["../../lib/typescript/ui/spa-shared/src/*"],
-      "@lib/api-client/*": ["../../lib/typescript/api-client/src/*"]
+      "@ui/spa-shared/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "build"]
 }

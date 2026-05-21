@@ -2,7 +2,7 @@ import * as path from "node:path"
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@template-nextjs/db", "@ui/components", "@lib/api-client"],
+  transpilePackages: ["@template-nextjs/db", "@ui/base", "@ui/seo-shared", "@lib/api-client"],
   turbopack: {
     root: path.join(__dirname, "..", ".."),
   },

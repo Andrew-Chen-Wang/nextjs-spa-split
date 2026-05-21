@@ -13,7 +13,8 @@
     "allowImportingTsExtensions": false,
     "paths": {
       "@admin/*": ["./src/*"],
-      "@ui/components/*": ["../../lib/typescript/ui/components/src/*"],
+      "@ui/base/*": ["../../lib/typescript/ui/base/src/*"],
+      "@ui/spa-shared/*": ["../../lib/typescript/ui/spa-shared/src/*"],
       "@lib/api-client/*": ["../../lib/typescript/api-client/src/*"]
     }
   },

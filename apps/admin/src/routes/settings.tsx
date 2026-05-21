@@ -1,6 +1,6 @@
-import { Button } from "@ui/components/ui/button"
-import { Checkbox } from "@ui/components/ui/checkbox"
-import { Label } from "@ui/components/ui/label"
+import { Button } from "@ui/base/ui/button"
+import { Checkbox } from "@ui/base/ui/checkbox"
+import { Label } from "@ui/base/ui/label"
 import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/settings")({
