@@ -12,10 +12,10 @@
     "isolatedModules": true,
     "allowImportingTsExtensions": false,
     "paths": {
-      "@dashboard/*": ["./src/*"],
-      "@ui/base/*": ["../../lib/typescript/ui/base/src/*"],
-      "@ui/spa-shared/*": ["../../lib/typescript/ui/spa-shared/src/*"],
-      "@lib/api-client/*": ["../../lib/typescript/api-client/src/*"]
+      "@admin/*": ["./src/*"],
+      "@ui/base/*": ["../../../lib/typescript/ui/base/src/*"],
+      "@ui/spa-shared/*": ["../../../lib/typescript/ui/spa-shared/src/*"],
+      "@lib/api-client/*": ["../../../lib/typescript/api-client/src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]

@@ -41,8 +41,8 @@ This is a TypeScript monorepo with npm workspaces:
 
 - `apps/website` - Next.js frontend with Tailwind/ShadCN UI. API routes are proxied through `/api`. Proxy (middleware) handles auth + rewrites for SPA routes
 - `apps/internal-api` - Hono API with TypeBox schemas and OpenAPI generation. Mounted at `/api` via Next.js
-- `apps/dashboard` - React SPA (Vite + TanStack Router) served at `/dashboard`. Requires authentication
-- `apps/admin` - React SPA (Vite + TanStack Router) served at `/admin`. Requires authentication + is_admin
+- `apps/frontends/dashboard` - React SPA (Vite + TanStack Router) served at `/dashboard`. Requires authentication
+- `apps/frontends/admin` - React SPA (Vite + TanStack Router) served at `/admin`. Requires authentication + is_admin
 - `apps/dbmigrator` - Kysely database migrations
 
 **Packages:**

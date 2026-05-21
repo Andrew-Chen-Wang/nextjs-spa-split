@@ -1,5 +1,6 @@
 packages:
   - "apps/*"
+  - "apps/frontends/*"
   - "packages/*"
   - "lib/typescript/*"
   - "lib/typescript/utils/*"

@@ -157,122 +157,6 @@ importers:
         specifier: ^4.60.4
         version: 4.60.4
 
-  apps/admin:
-    dependencies:
-      '@lib/api-client':
-        specifier: workspace:*
-        version: link:../../lib/typescript/api-client
-      '@tanstack/react-query':
-        specifier: 'catalog:'
-        version: 5.100.11(react@19.2.6)
-      '@tanstack/react-router':
-        specifier: 'catalog:'
-        version: 1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@ui/base':
-        specifier: workspace:*
-        version: link:../../lib/typescript/ui/base
-      '@ui/spa-shared':
-        specifier: workspace:*
-        version: link:../../lib/typescript/ui/spa-shared
-      react:
-        specifier: 'catalog:'
-        version: 19.2.6
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.2.6(react@19.2.6)
-      tailwindcss:
-        specifier: 'catalog:'
-        version: 4.3.0
-      vite-plugin-static-copy:
-        specifier: 'catalog:'
-        version: 4.1.0(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-    devDependencies:
-      '@rolldown/plugin-babel':
-        specifier: 'catalog:'
-        version: 0.2.3(@babel/core@7.29.0)(rolldown@1.0.1)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-      '@tailwindcss/vite':
-        specifier: 'catalog:'
-        version: 4.3.0(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-      '@tanstack/router-plugin':
-        specifier: 'catalog:'
-        version: 1.168.6(@tanstack/react-router@1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-      '@types/react':
-        specifier: 'catalog:'
-        version: 19.2.15
-      '@types/react-dom':
-        specifier: 'catalog:'
-        version: 19.2.3(@types/react@19.2.15)
-      '@vitejs/plugin-react':
-        specifier: 'catalog:'
-        version: 6.0.2(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.0)(rolldown@1.0.1)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3)))(babel-plugin-react-compiler@1.0.0)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-      babel-plugin-react-compiler:
-        specifier: 'catalog:'
-        version: 1.0.0
-      typescript:
-        specifier: 'catalog:'
-        version: 6.0.3
-      vite:
-        specifier: 'catalog:'
-        version: 8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3)
-
-  apps/dashboard:
-    dependencies:
-      '@lib/api-client':
-        specifier: workspace:*
-        version: link:../../lib/typescript/api-client
-      '@tanstack/react-query':
-        specifier: 'catalog:'
-        version: 5.100.11(react@19.2.6)
-      '@tanstack/react-router':
-        specifier: 'catalog:'
-        version: 1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@ui/base':
-        specifier: workspace:*
-        version: link:../../lib/typescript/ui/base
-      '@ui/spa-shared':
-        specifier: workspace:*
-        version: link:../../lib/typescript/ui/spa-shared
-      react:
-        specifier: 'catalog:'
-        version: 19.2.6
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.2.6(react@19.2.6)
-      tailwindcss:
-        specifier: 'catalog:'
-        version: 4.3.0
-      vite-plugin-static-copy:
-        specifier: 'catalog:'
-        version: 4.1.0(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-    devDependencies:
-      '@rolldown/plugin-babel':
-        specifier: 'catalog:'
-        version: 0.2.3(@babel/core@7.29.0)(rolldown@1.0.1)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-      '@tailwindcss/vite':
-        specifier: 'catalog:'
-        version: 4.3.0(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-      '@tanstack/router-plugin':
-        specifier: 'catalog:'
-        version: 1.168.6(@tanstack/react-router@1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-      '@types/react':
-        specifier: 'catalog:'
-        version: 19.2.15
-      '@types/react-dom':
-        specifier: 'catalog:'
-        version: 19.2.3(@types/react@19.2.15)
-      '@vitejs/plugin-react':
-        specifier: 'catalog:'
-        version: 6.0.2(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.0)(rolldown@1.0.1)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3)))(babel-plugin-react-compiler@1.0.0)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
-      babel-plugin-react-compiler:
-        specifier: 'catalog:'
-        version: 1.0.0
-      typescript:
-        specifier: 'catalog:'
-        version: 6.0.3
-      vite:
-        specifier: 'catalog:'
-        version: 8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3)
-
   apps/dbmigrator:
     dependencies:
       '@template-nextjs/db':
@@ -285,6 +169,122 @@ importers:
       kysely-ctl:
         specifier: ^0.21.0
         version: 0.21.0(kysely@0.29.2)
+
+  apps/frontends/admin:
+    dependencies:
+      '@lib/api-client':
+        specifier: workspace:*
+        version: link:../../../lib/typescript/api-client
+      '@tanstack/react-query':
+        specifier: 'catalog:'
+        version: 5.100.11(react@19.2.6)
+      '@tanstack/react-router':
+        specifier: 'catalog:'
+        version: 1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@ui/base':
+        specifier: workspace:*
+        version: link:../../../lib/typescript/ui/base
+      '@ui/spa-shared':
+        specifier: workspace:*
+        version: link:../../../lib/typescript/ui/spa-shared
+      react:
+        specifier: 'catalog:'
+        version: 19.2.6
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.2.6(react@19.2.6)
+      tailwindcss:
+        specifier: 'catalog:'
+        version: 4.3.0
+      vite-plugin-static-copy:
+        specifier: 'catalog:'
+        version: 4.1.0(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+    devDependencies:
+      '@rolldown/plugin-babel':
+        specifier: 'catalog:'
+        version: 0.2.3(@babel/core@7.29.0)(rolldown@1.0.1)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+      '@tailwindcss/vite':
+        specifier: 'catalog:'
+        version: 4.3.0(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+      '@tanstack/router-plugin':
+        specifier: 'catalog:'
+        version: 1.168.6(@tanstack/react-router@1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.15
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.2.3(@types/react@19.2.15)
+      '@vitejs/plugin-react':
+        specifier: 'catalog:'
+        version: 6.0.2(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.0)(rolldown@1.0.1)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3)))(babel-plugin-react-compiler@1.0.0)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+      babel-plugin-react-compiler:
+        specifier: 'catalog:'
+        version: 1.0.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+      vite:
+        specifier: 'catalog:'
+        version: 8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3)
+
+  apps/frontends/dashboard:
+    dependencies:
+      '@lib/api-client':
+        specifier: workspace:*
+        version: link:../../../lib/typescript/api-client
+      '@tanstack/react-query':
+        specifier: 'catalog:'
+        version: 5.100.11(react@19.2.6)
+      '@tanstack/react-router':
+        specifier: 'catalog:'
+        version: 1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@ui/base':
+        specifier: workspace:*
+        version: link:../../../lib/typescript/ui/base
+      '@ui/spa-shared':
+        specifier: workspace:*
+        version: link:../../../lib/typescript/ui/spa-shared
+      react:
+        specifier: 'catalog:'
+        version: 19.2.6
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.2.6(react@19.2.6)
+      tailwindcss:
+        specifier: 'catalog:'
+        version: 4.3.0
+      vite-plugin-static-copy:
+        specifier: 'catalog:'
+        version: 4.1.0(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+    devDependencies:
+      '@rolldown/plugin-babel':
+        specifier: 'catalog:'
+        version: 0.2.3(@babel/core@7.29.0)(rolldown@1.0.1)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+      '@tailwindcss/vite':
+        specifier: 'catalog:'
+        version: 4.3.0(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+      '@tanstack/router-plugin':
+        specifier: 'catalog:'
+        version: 1.168.6(@tanstack/react-router@1.170.4(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.15
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.2.3(@types/react@19.2.15)
+      '@vitejs/plugin-react':
+        specifier: 'catalog:'
+        version: 6.0.2(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.0)(rolldown@1.0.1)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3)))(babel-plugin-react-compiler@1.0.0)(vite@8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3))
+      babel-plugin-react-compiler:
+        specifier: 'catalog:'
+        version: 1.0.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+      vite:
+        specifier: 'catalog:'
+        version: 8.0.13(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.3)
 
   apps/internal-api:
     dependencies:
@@ -4112,7 +4112,7 @@ snapshots:
       babel-dead-code-elimination: 1.0.12
       diff: 8.0.4
       pathe: 2.0.3
-      tinyglobby: 0.2.15
+      tinyglobby: 0.2.16
     transitivePeerDependencies:
       - supports-color
 
@@ -5187,7 +5187,7 @@ snapshots:
   unplugin@3.0.0:
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      picomatch: 4.0.3
+      picomatch: 4.0.4
       webpack-virtual-modules: 0.6.2
 
   update-browserslist-db@1.2.3(browserslist@4.28.2):

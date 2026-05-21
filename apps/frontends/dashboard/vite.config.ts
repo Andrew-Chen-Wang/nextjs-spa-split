@@ -9,7 +9,7 @@ import { viteStaticCopy } from "vite-plugin-static-copy"
 const fontsourceFiles = (pkg: string) =>
   path.resolve(
     __dirname,
-    `../../lib/typescript/ui/base/node_modules/@fontsource-variable/${pkg}/files/*.woff2`,
+    `../../../lib/typescript/ui/base/node_modules/@fontsource-variable/${pkg}/files/*.woff2`,
   )
 
 export default defineConfig(({ mode }) => ({

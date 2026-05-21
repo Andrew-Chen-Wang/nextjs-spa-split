@@ -33,8 +33,6 @@ export default defineConfig({
     "**/.config/**",
     "apps/website/postcss.config.js",
     "apps/website/next.config.ts",
-    "apps/dashboard/postcss.config.js",
-    "apps/admin/postcss.config.js",
     "lib/typescript/api-client/src/generated/**",
     "**/routeTree.gen.ts",
   ],
@@ -111,7 +109,7 @@ export default defineConfig({
       },
     },
     {
-      files: ["**/apps/website/**/*.tsx", "**/apps/dashboard/**/*.tsx", "**/apps/admin/**/*.tsx"],
+      files: ["**/apps/website/**/*.tsx", "**/apps/frontends/dashboard/**/*.tsx", "**/apps/frontends/admin/**/*.tsx"],
       rules: {
         "react/react-in-jsx-scope": "off",
       },
