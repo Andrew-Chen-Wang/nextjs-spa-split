@@ -12,6 +12,8 @@ catalog:
   "@hey-api/openapi-ts": ^0.97.2
   "@oslojs/crypto": ^1.0.1
   "@oslojs/encoding": ^1.1.0
+  "@fontsource-variable/geist": ^5.2.9
+  "@fontsource-variable/geist-mono": ^5.2.8
   "@radix-ui/react-checkbox": ^1.3.3
   "@radix-ui/react-label": ^2.1.8
   "@radix-ui/react-slot": ^1.2.4
@@ -40,3 +42,4 @@ catalog:
   typescript: ^6.0.3
   uuid: ^14.0.0
   vite: ^8.0.13
+  vite-plugin-static-copy: ^4.1.0

@@ -16,7 +16,8 @@
     "@ui/spa-shared": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "tailwindcss": "catalog:"
+    "tailwindcss": "catalog:",
+    "vite-plugin-static-copy": "catalog:"
   },
   "devDependencies": {
     "@rolldown/plugin-babel": "catalog:",
