@@ -39,6 +39,7 @@ export default defineConfig({
     "**/routeTree.gen.ts",
   ],
   rules: {
+    "consistent-return": "off",
     "typescript/no-unsafe-type-assertion": "off",
     "typescript/await-thenable": "error",
     "typescript/no-array-delete": "error",
