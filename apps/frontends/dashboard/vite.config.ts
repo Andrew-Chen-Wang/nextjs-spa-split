@@ -36,7 +36,16 @@ export default defineConfig(({ mode }) => ({
       "../../../lib/typescript/api-client/src/**/*.{ts,tsx}",
     ],
   },
+  resolve: {
+    alias: {
+      "@frontends/dashboard": path.resolve(__dirname, "./src"),
+      "@ui/base": path.resolve(__dirname, "../../../lib/typescript/ui/base/src"),
+      "@ui/spa-shared": path.resolve(__dirname, "../../../lib/typescript/ui/spa-shared/src"),
+      "@ui/seo-shared": path.resolve(__dirname, "../../../lib/typescript/ui/seo-shared/src"),
+      "@lib/api-client": path.resolve(__dirname, "../../../lib/typescript/api-client/src"),
+    },
+  },
   server: {
-    port: 3001,
+    port: 3002,
   },
 }))

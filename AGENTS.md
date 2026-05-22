@@ -8,8 +8,8 @@ pnpm install
 pnpm run dev --workspace=website
 
 # Start SPA dev servers (separate terminals)
-pnpm run dev --workspace=dashboard    # Dashboard SPA on port 3001
-pnpm run dev --workspace=admin        # Admin SPA on port 3002
+pnpm run dev --workspace=dashboard    # Dashboard SPA on port 3002
+pnpm run dev --workspace=admin        # Admin SPA on port 3003
 
 # Run all tests
 pnpm test

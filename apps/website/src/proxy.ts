@@ -55,10 +55,10 @@ function findSharedRoute(pathname: string): SharedRoute | undefined {
 
 const SPA_ADMIN = {
   prefix: "/admin",
-  devPort: 3002,
+  devPort: 3003,
 } as const
 
-const DASHBOARD_DEV_PORT = 3001
+const DASHBOARD_DEV_PORT = 3002
 
 function isNextJsRoute(pathname: string): boolean {
   if (NEXTJS_PUBLIC_EXACT.has(pathname)) return true
