@@ -1,4 +1,5 @@
 import { client } from "./generated/client.gen"
+import { client as adminClient } from "./admin-generated/client.gen"
 
 export * from "./generated/client.gen"
 export * from "./generated/types.gen"
@@ -10,3 +11,4 @@ export const baseUrl =
     : "https://nextjs-spa-split.andrewcwang.com"
 
 client.setConfig({ baseUrl, credentials: "include" })
+adminClient.setConfig({ baseUrl, credentials: "include" })

@@ -1,7 +1,7 @@
 import type { DB } from "@template-nextjs/db"
 import type { Kysely, Selectable } from "kysely"
 
-type SessionUser = Pick<Selectable<DB["user"]>, "id" | "isAdmin" | "name" | "email">
+export type SessionUser = Pick<Selectable<DB["user"]>, "id" | "isAdmin" | "name" | "email">
 
 type SessionValidationResult = {
   session: Selectable<DB["session"]>

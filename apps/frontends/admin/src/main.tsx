@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { RouterProvider, createRouter } from "@tanstack/react-router"
 import { client } from "@lib/api-client/generated/client.gen"
+import { client as adminClient } from "@lib/api-client/admin-generated/client.gen"
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import "@frontends/admin/app.css"
@@ -8,6 +9,7 @@ import { routeTree } from "@frontends/admin/routeTree.gen"
 import { baseUrl } from "@lib/api-client/index"
 
 client.setConfig({ baseUrl, credentials: "include" })
+adminClient.setConfig({ baseUrl, credentials: "include" })
 
 const queryClient = new QueryClient({
   defaultOptions: {

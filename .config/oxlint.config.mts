@@ -34,6 +34,7 @@ export default defineConfig({
     "apps/website/postcss.config.js",
     "apps/website/next.config.ts",
     "lib/typescript/api-client/src/generated/**",
+    "lib/typescript/api-client/src/admin-generated/**",
     "**/routeTree.gen.ts",
   ],
   rules: {
