@@ -70,7 +70,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Cache for Turbo
-        uses: rharkor/caching-for-turbo@v2.3.11
+        uses: rharkor/caching-for-turbo@v2.4.2
+        with:
+          max-age: 1w
+          max-files: 50
+          max-size: 3gb
       - name: Build Dashboard
         run: pnpm exec turbo run build --filter=dashboard
       - name: Configure AWS credentials
@@ -110,7 +114,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Cache for Turbo
-        uses: rharkor/caching-for-turbo@v2.3.11
+        uses: rharkor/caching-for-turbo@v2.4.2
+        with:
+          max-age: 1w
+          max-files: 50
+          max-size: 3gb
       - name: Build Admin
         run: pnpm exec turbo run build --filter=admin
       - name: Configure AWS credentials

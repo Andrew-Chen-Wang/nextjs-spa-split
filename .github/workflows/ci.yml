@@ -60,7 +60,11 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Cache for Turbo
-        uses: rharkor/caching-for-turbo@v2.3.11
+        uses: rharkor/caching-for-turbo@v2.4.2
+        with:
+          max-age: 1w
+          max-files: 50
+          max-size: 3gb
 
       - name: Run migrations
         run: pnpm --filter=dbmigrator run migrate:latest
