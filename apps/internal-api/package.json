@@ -21,11 +21,11 @@
     "@lib/dao": "workspace:*",
     "@oslojs/crypto": "catalog:",
     "@oslojs/encoding": "catalog:",
-    "@scalar/hono-api-reference": "^0.10.16",
+    "@scalar/hono-api-reference": "^0.11.9",
     "@template-nextjs/db": "workspace:*",
     "@utils/numbers": "workspace:*",
     "hono": "catalog:",
-    "hono-typebox-openapi": "^0.0.5",
+    "hono-typebox-openapi": "^0.2.0",
     "kysely": "catalog:",
     "typebox": "catalog:",
     "uuid": "catalog:"

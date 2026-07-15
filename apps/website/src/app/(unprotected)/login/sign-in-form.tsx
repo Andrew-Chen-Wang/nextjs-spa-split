@@ -13,8 +13,8 @@ export function SignInForm() {
   const [agreedToTerms, setAgreedToTerms] = useState(false)
   const termsId = useId()
 
-  const handleTermsChange = useCallback((checked: boolean | "indeterminate") => {
-    setAgreedToTerms(checked as boolean)
+  const handleTermsChange = useCallback((checked: boolean) => {
+    setAgreedToTerms(checked)
   }, [])
 
   const handleGoogleClick = useCallback(() => {

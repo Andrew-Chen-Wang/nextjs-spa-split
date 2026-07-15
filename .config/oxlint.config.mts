@@ -110,7 +110,11 @@ export default defineConfig({
       },
     },
     {
-      files: ["**/apps/website/**/*.tsx", "**/apps/frontends/**/*.tsx"],
+      files: [
+        "**/apps/website/**/*.tsx",
+        "**/apps/frontends/**/*.tsx",
+        "**/lib/typescript/**/*.tsx",
+      ],
       rules: {
         "react/react-in-jsx-scope": "off",
       },
