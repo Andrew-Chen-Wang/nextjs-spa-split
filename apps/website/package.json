@@ -10,14 +10,12 @@
   },
   "dependencies": {
     "@api/internal": "workspace:*",
+    "@base-ui/react": "catalog:",
     "@lib/api-client": "workspace:*",
     "@oslojs/crypto": "catalog:",
     "@oslojs/encoding": "catalog:",
-    "@radix-ui/react-checkbox": "catalog:",
-    "@radix-ui/react-label": "catalog:",
-    "@radix-ui/react-slot": "catalog:",
     "@tailwindcss/postcss": "catalog:",
-    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/typography": "^0.5.20",
     "@tanstack/react-query": "catalog:",
     "@template-nextjs/db": "workspace:*",
     "@ui/base": "workspace:*",
@@ -28,7 +26,7 @@
     "hono": "catalog:",
     "kysely": "catalog:",
     "lucide-react": "catalog:",
-    "next": "^16.2.6",
+    "next": "16.3.0-canary.86",
     "postcss": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
@@ -39,14 +37,14 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vercel/config": "^0.5.0",
+    "@vercel/config": "^0.5.5",
     "babel-plugin-react-compiler": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
   "optionalDependencies": {
-    "@tailwindcss/oxide-linux-arm64-musl": "^4.3.0",
-    "@tailwindcss/oxide-linux-x64-musl": "^4.3.0",
+    "@tailwindcss/oxide-linux-arm64-musl": "^4.3.2",
+    "@tailwindcss/oxide-linux-x64-musl": "^4.3.2",
     "lightningcss-linux-arm64-musl": "^1.32.0",
     "lightningcss-linux-x64-musl": "^1.32.0"
   }

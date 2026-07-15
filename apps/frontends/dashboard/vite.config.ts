@@ -41,6 +41,9 @@ export default defineConfig(({ mode }) => ({
       "@frontends/dashboard": path.resolve(__dirname, "./src"),
       "@ui/base": path.resolve(__dirname, "../../../lib/typescript/ui/base/src"),
       "@ui/spa-shared": path.resolve(__dirname, "../../../lib/typescript/ui/spa-shared/src"),
+      // Must come before the "@ui/seo-shared" prefix alias so seo-shared components render
+      // links with TanStack Router's Link instead of the plain <a> template.
+      "@ui/seo-shared/_internal/seo-link": path.resolve(__dirname, "./src/components/seo-link.tsx"),
       "@ui/seo-shared": path.resolve(__dirname, "../../../lib/typescript/ui/seo-shared/src"),
       "@lib/api-client": path.resolve(__dirname, "../../../lib/typescript/api-client/src"),
     },

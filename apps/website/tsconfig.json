@@ -12,10 +12,9 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "allowImportingTsExtensions": false,
     "incremental": true,
-    "composite": true,
     "plugins": [
       {
         "name": "next"
@@ -30,14 +29,12 @@
       "@lib/api-client/*": ["../../lib/typescript/api-client/src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
-  "references": [
-    { "path": "../internal-api" },
-    { "path": "../../packages/db" },
-    { "path": "../../lib/typescript/dao" },
-    { "path": "../../lib/typescript/ui/base" },
-    { "path": "../../lib/typescript/ui/seo-shared" },
-    { "path": "../../lib/typescript/api-client" }
-  ]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
 }
