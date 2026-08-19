@@ -5,7 +5,7 @@ import { describeRoute } from "hono-typebox-openapi"
 import { resolver } from "hono-typebox-openapi/typebox"
 import { Type } from "typebox"
 import { authMiddleware, authNoThrowMiddleware } from "../middleware"
-import { COOKIE_DOMAIN } from "../utils/env"
+import { cookieDomain } from "../utils/env"
 import { EmptyObject, ErrorSchemaResponse, Nullable } from "../utils/common.serializer"
 
 const AuthMeResponseT = Type.Object({
@@ -67,7 +67,7 @@ const app = new Hono()
       const session = c.var.session
       await db.deleteFrom("session").where("sessionKey", "=", session.sessionKey).execute()
       // Domain must match the one the website set the cookie with, or it survives logout.
-      deleteCookie(c, "session", { path: "/", domain: COOKIE_DOMAIN })
+      deleteCookie(c, "session", { path: "/", domain: cookieDomain() })
       return c.json({}, 200)
     },
   )

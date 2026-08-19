@@ -24,7 +24,7 @@
     "@lib/dao": "workspace:*",
     "@oslojs/crypto": "catalog:",
     "@oslojs/encoding": "catalog:",
-    "@scalar/hono-api-reference": "^0.11.9",
+    "@scalar/hono-api-reference": "^0.11.14",
     "@template-nextjs/db": "workspace:*",
     "@utils/numbers": "workspace:*",
     "hono": "catalog:",
@@ -36,8 +36,8 @@
   "devDependencies": {
     "@hey-api/openapi-ts": "catalog:",
     "@types/node": "catalog:",
-    "@vercel/config": "^0.5.5",
-    "tsx": "^4.23.1",
+    "@vercel/config": "^0.6.1",
+    "tsx": "^4.23.12",
     "typescript": "catalog:"
   }
 }

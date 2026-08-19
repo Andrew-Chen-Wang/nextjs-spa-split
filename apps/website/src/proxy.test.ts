@@ -7,8 +7,8 @@ import { proxy } from "./proxy"
 
 vi.mock("./lib/auth", () => ({
   validateSessionToken: vi.fn<typeof validateSessionToken>(),
-  // Host-only cookie in dev/test; see the COOKIE_DOMAIN docs in ./lib/auth
-  COOKIE_DOMAIN: undefined,
+  // Host-only cookie in dev/test; see the cookieDomain docs in ./lib/auth
+  cookieDomain: () => undefined,
 }))
 import { validateSessionToken } from "./lib/auth"
 const mockValidate = vi.mocked(validateSessionToken)
