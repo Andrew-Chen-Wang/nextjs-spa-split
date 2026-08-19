@@ -1,104 +1,104 @@
 import { crudAccount } from "@lib/dao/account/crud"
 import { crudUser } from "@lib/dao/user/crud"
+import { type OAuth2Tokens, parseGoogleIdToken } from "@lib/oauth"
 import { db } from "@template-nextjs/db"
+import { constantTimeEqualUtf8 } from "@utils/crypto"
 import { createSession, generateSessionToken, setSessionTokenCookie } from "@website/lib/auth"
-import { oauthGoogle } from "@website/lib/oauth"
-import type { OAuth2Tokens } from "arctic"
-import { decodeIdToken } from "arctic"
+import { googleOAuthClient } from "@website/lib/oauth"
 import { cookies } from "next/headers"
 
-interface GoogleClaims {
-  sub: string
-  name: string
-  email: string
-  picture: string
-  email_verified: boolean
-  family_name: string
-  given_name: string
-  exp: number
+function badRequest(): Response {
+  return new Response(null, { status: 400 })
+}
+
+function redirectHome(): Response {
+  return new Response(null, { status: 302, headers: { Location: "/" } })
 }
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url)
   const code = url.searchParams.get("code")
   const state = url.searchParams.get("state")
+
   const cookieStore = await cookies()
   const storedState = cookieStore.get("google_oauth_state")?.value ?? null
   const codeVerifier = cookieStore.get("google_code_verifier")?.value ?? null
+  // Single-use: clear them whether or not the rest of the flow succeeds.
   cookieStore.delete("google_oauth_state")
   cookieStore.delete("google_code_verifier")
+
   if (code === null || state === null || storedState === null || codeVerifier === null) {
-    return new Response(null, {
-      status: 400,
-    })
+    return badRequest()
   }
-  if (state !== storedState) {
-    return new Response(null, {
-      status: 400,
-    })
+  if (!constantTimeEqualUtf8(state, storedState)) {
+    return badRequest()
   }
 
   let tokens: OAuth2Tokens
   try {
-    tokens = await oauthGoogle.validateAuthorizationCode(code, codeVerifier)
+    tokens = await googleOAuthClient().validateAuthorizationCode(code, codeVerifier)
   } catch {
-    // Invalid code or client credentials
-    return new Response(null, {
-      status: 400,
-    })
+    // Invalid or replayed code, or bad client credentials.
+    return badRequest()
   }
-  const claims = decodeIdToken(tokens.idToken()) as GoogleClaims
-  const googleUserId = claims.sub
-  const name = claims.name
-  const email = claims.email
-  const image = claims.picture
-  // const emailVerified = claims.email_verified
-  const exp = claims.exp
 
-  const existingUser = await db
+  if (tokens.idToken === null) {
+    // Only happens if the `openid` scope was dropped from the authorization request.
+    return badRequest()
+  }
+
+  let claims: ReturnType<typeof parseGoogleIdToken>
+  try {
+    claims = parseGoogleIdToken(tokens.idToken)
+  } catch {
+    return badRequest()
+  }
+
+  // Key on `sub`: it is Google's stable account identifier, whereas an email address can change
+  // hands. An unverified address must never be enough to claim an existing account.
+  if (!claims.emailVerified) {
+    return badRequest()
+  }
+
+  const existingAccount = await db
     .selectFrom("account")
-    .where("providerAccountId", "=", googleUserId)
+    .where("providerAccountId", "=", claims.sub)
     .where("provider", "=", "google")
     .select("userId")
     .executeTakeFirst()
 
-  if (existingUser) {
+  if (existingAccount) {
     const sessionToken = generateSessionToken()
-    const session = await createSession(sessionToken, existingUser.userId)
+    const session = await createSession(sessionToken, existingAccount.userId)
     await setSessionTokenCookie(sessionToken, session.expires)
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: "/",
-      },
-    })
+    return redirectHome()
   }
 
-  let user = await db.selectFrom("user").where("email", "=", email).selectAll().executeTakeFirst()
+  let user = await db
+    .selectFrom("user")
+    .where("email", "=", claims.email)
+    .selectAll()
+    .executeTakeFirst()
   user ??= await crudUser(db).createUser({
-    name,
-    email,
-    image,
+    name: claims.name,
+    email: claims.email,
+    image: claims.picture,
   })
+
   await crudAccount(db).createAccount({
     userId: user.id,
     provider: "google",
-    providerAccountId: googleUserId,
+    providerAccountId: claims.sub,
     type: "oauth",
-    scope: tokens.scopes().join(" "),
-    idToken: tokens.idToken(),
-    accessToken: tokens.accessToken(),
-    tokenType: tokens.tokenType(),
-    expiresAt: exp,
+    scope: tokens.scopes.join(" "),
+    idToken: tokens.idToken,
+    accessToken: tokens.accessToken,
+    tokenType: tokens.tokenType,
+    expiresAt: claims.exp,
   })
 
   const sessionToken = generateSessionToken()
   const session = await createSession(sessionToken, user.id)
   await setSessionTokenCookie(sessionToken, session.expires)
-  return new Response(null, {
-    status: 302,
-    headers: {
-      Location: "/",
-    },
-  })
+  return redirectHome()
 }

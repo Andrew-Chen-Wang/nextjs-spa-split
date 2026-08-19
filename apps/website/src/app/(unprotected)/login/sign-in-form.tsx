@@ -6,7 +6,6 @@ import { Checkbox } from "@ui/base/ui/checkbox"
 import { Label } from "@ui/base/ui/label"
 import Link from "next/link"
 import { useCallback, useId, useState } from "react"
-import { oauthRedirect } from "./actions"
 
 export function SignInForm() {
   const [signInError, setSignInError] = useState<string | null>(null)
@@ -18,14 +17,15 @@ export function SignInForm() {
   }, [])
 
   const handleGoogleClick = useCallback(() => {
-    const googleSubmit = async () => {
-      if (!agreedToTerms) {
-        setSignInError("Please agree to the terms and conditions to continue")
-        return
-      }
-      await oauthRedirect("/login/google")
+    if (!agreedToTerms) {
+      setSignInError("Please agree to the terms and conditions to continue")
+      return
     }
-    googleSubmit().catch(console.error)
+    // A full-page navigation, not a router push: /login/google is a Route Handler that 302s to
+    // Google, so there is no Next.js page for the client router to render. It must not go through
+    // a Server Action either — those are POSTed, and the redirect keeps the method, which lands
+    // on the GET-only handler as a 405.
+    window.location.href = "/login/google"
   }, [agreedToTerms])
 
   return (

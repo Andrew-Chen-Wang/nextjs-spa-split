@@ -1,7 +1,10 @@
 import { authUser } from "@lib/dao/user/auth"
-import { sha256 } from "@oslojs/crypto/sha2"
-import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from "@oslojs/encoding"
 import { type DB, db } from "@template-nextjs/db"
+import {
+  encodeHexLowerCase,
+  generateSessionToken as randomSessionToken,
+  sha256Utf8,
+} from "@utils/crypto"
 import type { Selectable } from "kysely"
 import { cookies } from "next/headers"
 import { cache } from "react"
@@ -24,18 +27,22 @@ export function cookieDomain(): string | undefined {
 }
 
 export function generateSessionToken(): string {
-  const bytes = new Uint8Array(20)
-  crypto.getRandomValues(bytes)
-  return encodeBase32LowerCaseNoPadding(bytes)
+  return randomSessionToken()
+}
+
+/** The session table stores the hash, never the token, so a database leak yields nothing
+ *  replayable as a cookie. */
+async function toSessionKey(token: string): Promise<string> {
+  return encodeHexLowerCase(await sha256Utf8(token))
 }
 
 export async function createSession(
   token: string,
   userId: string,
 ): Promise<Selectable<DB["session"]>> {
-  const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)))
+  const sessionKey = await toSessionKey(token)
   const newSession = {
-    sessionKey: sessionId,
+    sessionKey,
     userId,
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
   }
@@ -51,8 +58,7 @@ export type SessionValidationResult = {
 } | null
 
 export async function validateSessionToken(token: string): Promise<SessionValidationResult> {
-  const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)))
-  return await authUser(db).validateSessionToken(sessionId)
+  return await authUser(db).validateSessionToken(await toSessionKey(token))
 }
 
 export async function invalidateSession(sessionId: string): Promise<void> {

@@ -22,10 +22,9 @@
   "dependencies": {
     "@hono/node-server": "^2.1.1",
     "@lib/dao": "workspace:*",
-    "@oslojs/crypto": "catalog:",
-    "@oslojs/encoding": "catalog:",
     "@scalar/hono-api-reference": "^0.11.14",
     "@template-nextjs/db": "workspace:*",
+    "@utils/crypto": "workspace:*",
     "@utils/numbers": "workspace:*",
     "hono": "catalog:",
     "hono-typebox-openapi": "^0.2.1",

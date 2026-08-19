@@ -6,7 +6,14 @@ const nextConfig: NextConfig = {
   // Links routinely point at SPA routes served through the proxy (e.g. /dashboard),
   // which typed routes would reject as unknown Next.js routes
   typedRoutes: false,
-  transpilePackages: ["@template-nextjs/db", "@ui/base", "@ui/seo-shared", "@lib/api-client"],
+  transpilePackages: [
+    "@template-nextjs/db",
+    "@lib/api-client",
+    "@lib/oauth",
+    "@ui/base",
+    "@ui/seo-shared",
+    "@utils/crypto",
+  ],
   turbopack: {
     root: path.join(__dirname, "..", ".."),
     resolveAlias: {

@@ -10,8 +10,11 @@ export const Route = createRootRoute({
 function RootLayout() {
   const { data, isLoading, isError } = useQuery(getV1AuthMeOptions())
   const user = data?.user ?? null
-  const unauthenticated = isError || user === null
-  const forbidden = user !== null && !user.isAdmin
+  // Gate on `isLoading`: until the query settles there is nothing to conclude, and treating the
+  // in-flight state as unauthenticated would redirect every visitor to /login before their
+  // session is ever checked.
+  const unauthenticated = !isLoading && (isError || user === null)
+  const forbidden = !isLoading && user !== null && !user.isAdmin
 
   // Navigating is a side effect, so it belongs in an effect rather than in render.
   useEffect(() => {
