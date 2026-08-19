@@ -31,8 +31,8 @@ and the dashboard and admin SPAs on `:3002` and `:3003`.
 
 The API is a separate deployment (see [Splitting the API out of Next.js](#splitting-the-api-out-of-nextjs)),
 so it gets its own Vercel project: point the project's Root Directory at `apps/internal-api`,
-enable _Include files outside the Root Directory_, and set `DATABASE_URL`, `COOKIE_DOMAIN`,
-`NEXT_PUBLIC_API_URL`, and `VERCEL_EXPERIMENTAL_BACKENDS=1`.
+enable _Include files outside the Root Directory_, and set `DATABASE_URL`,
+`NEXT_PUBLIC_HOST_URL`, `NEXT_PUBLIC_API_URL`, and `VERCEL_EXPERIMENTAL_BACKENDS=1`.
 
 Production configuration is also set up via OpenTofu (see the [tofu](./tofu) directory).
 It simply sets up IAM permission to deploy the SPA assets to an S3 bucket, and the smart
@@ -86,9 +86,10 @@ have to line up:
    session cookie at all.
 2. **The cookie `Domain` flag.** The website sets the `session` cookie; a cookie set for
    `domain.com` is _not_ sent to `api.domain.com` unless it carries an explicit
-   `Domain=.domain.com`. That is what the `COOKIE_DOMAIN` env var is for. It must stay **unset
-   locally** — `localhost:3000` and `localhost:3001` are the same host as far as cookies are
-   concerned, since cookies ignore ports.
+   `Domain=.domain.com`. Both sides derive that from `NEXT_PUBLIC_HOST_URL`, so there is no
+   separate variable to keep in sync. It resolves to `undefined` for `localhost`, which is what
+   you want locally: `localhost:3000` and `localhost:3001` are the same host as far as cookies
+   are concerned, since cookies ignore ports.
 
 `SameSite=lax` still works across the split: `domain.com` and `api.domain.com` share a
 registrable domain, so the requests are cross-_origin_ but same-_site_.

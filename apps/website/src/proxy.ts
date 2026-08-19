@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
-import { COOKIE_DOMAIN, validateSessionToken } from "./lib/auth"
+import { cookieDomain, validateSessionToken } from "./lib/auth"
 
 /** Public paths handled by Next.js — everything else goes to the dashboard SPA.
  *  Note there is no "/api" here: the Hono API is a separate deployment on its own host. */
@@ -88,7 +88,7 @@ function handleCsrfAndCookies(request: NextRequest): NextResponse | null {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         // Unset in dev; in prod scopes the cookie to the parent domain so the API host gets it.
-        domain: COOKIE_DOMAIN,
+        domain: cookieDomain(),
       })
     }
     return response

@@ -4,7 +4,6 @@
   "tasks": {
     "build": {
       "passThroughEnv": [
-        "COOKIE_DOMAIN",
         "DATABASE_URL",
         "NEXT_PUBLIC_API_URL",
         "VERCEL",

@@ -20,8 +20,8 @@ pnpm test
 npx vitest run path/to/file.test.ts --config .config/vitest.config.mts
 
 # Lint and format
-pnpm run format        # Oxfmt format with .config/oxfmt.config.ts
-pnpm run lint          # Oxlint check with auto-fix
+pnpm run format        # Oxfmt format with oxfmt.config.mts
+pnpm run lint          # Oxlint check with auto-fix (oxlint.config.mts)
 
 # Database
 docker-compose up -d                              # Start PostgreSQL

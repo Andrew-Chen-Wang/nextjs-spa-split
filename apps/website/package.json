@@ -35,15 +35,15 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vercel/config": "^0.5.5",
+    "@vercel/config": "^0.6.1",
     "babel-plugin-react-compiler": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
   "optionalDependencies": {
-    "@tailwindcss/oxide-linux-arm64-musl": "^4.3.2",
-    "@tailwindcss/oxide-linux-x64-musl": "^4.3.2",
-    "lightningcss-linux-arm64-musl": "^1.32.0",
-    "lightningcss-linux-x64-musl": "^1.32.0"
+    "@tailwindcss/oxide-linux-arm64-musl": "^4.3.3",
+    "@tailwindcss/oxide-linux-x64-musl": "^4.3.3",
+    "lightningcss-linux-arm64-musl": "^1.33.0",
+    "lightningcss-linux-x64-musl": "^1.33.0"
   }
 }

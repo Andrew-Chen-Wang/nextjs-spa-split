@@ -2,7 +2,7 @@ import { Scalar } from "@scalar/hono-api-reference"
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { generateSpecs, type OpenApiSpecsOptions, openAPISpecs } from "hono-typebox-openapi"
-import { APEX_DOMAIN } from "./utils/env"
+import { apexDomain } from "./utils/env"
 import { ErrorObjectT, ErrorResponseT, InnerErrorT } from "./utils/errors/error.serializer"
 import v1 from "./v1"
 import admin from "./admin"
@@ -51,10 +51,8 @@ app.use(
         return origin
       }
 
-      if (
-        APEX_DOMAIN !== undefined &&
-        (hostname === APEX_DOMAIN || hostname.endsWith(`.${APEX_DOMAIN}`))
-      ) {
+      const apex = apexDomain()
+      if (apex !== undefined && (hostname === apex || hostname.endsWith(`.${apex}`))) {
         return origin
       }
 

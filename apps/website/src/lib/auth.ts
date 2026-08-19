@@ -6,14 +6,22 @@ import type { Selectable } from "kysely"
 import { cookies } from "next/headers"
 import { cache } from "react"
 
-/** Cookie `Domain` for the session cookie, e.g. `.example.com`.
+/** Cookie `Domain` for the session cookie, derived from NEXT_PUBLIC_HOST_URL as `.example.com`.
  *
- *  Left unset in development: the website (:3000) and the API (:3001) share the `localhost`
- *  host, and cookies ignore ports, so a host-only cookie already reaches both. In production
- *  they live on different hosts (`example.com` and `api.example.com`), so the cookie needs an
- *  explicit parent domain — with the leading dot — to be sent to the API. */
-const configuredCookieDomain = process.env.COOKIE_DOMAIN?.trim()
-export const COOKIE_DOMAIN = configuredCookieDomain === "" ? undefined : configuredCookieDomain
+ *  Deliberately undefined for local hosts: the website (:3000) and the API (:3001) share the
+ *  `localhost` host, and cookies ignore ports, so a host-only cookie already reaches both.
+ *  In production they live on different hosts (`example.com` and `api.example.com`), so the
+ *  cookie needs the parent domain — with the leading dot — to be sent to the API.
+ *
+ *  A function rather than a constant, mirroring apps/internal-api/src/utils/env.ts, which must
+ *  read lazily because dotenv has not run when that module is evaluated. */
+export function cookieDomain(): string | undefined {
+  const hostUrl = process.env.NEXT_PUBLIC_HOST_URL
+  if (hostUrl === undefined || hostUrl === "") return undefined
+  const { hostname } = new URL(hostUrl)
+  if (hostname === "localhost" || hostname === "127.0.0.1") return undefined
+  return `.${hostname}`
+}
 
 export function generateSessionToken(): string {
   const bytes = new Uint8Array(20)
@@ -59,7 +67,7 @@ export async function setSessionTokenCookie(token: string, expiresAt: Date): Pro
     secure: process.env.NODE_ENV === "production",
     expires: expiresAt,
     path: "/",
-    domain: COOKIE_DOMAIN,
+    domain: cookieDomain(),
   })
 }
 
@@ -71,7 +79,7 @@ export async function deleteSessionTokenCookie(): Promise<void> {
     secure: process.env.NODE_ENV === "production",
     maxAge: 0,
     path: "/",
-    domain: COOKIE_DOMAIN,
+    domain: cookieDomain(),
   })
 }
 

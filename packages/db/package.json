@@ -20,11 +20,11 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "kysely": "catalog:",
-    "pg": "^8.22.0"
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "@types/pg": "^8.20.0",
+    "@types/pg": "^8.23.1",
     "kysely-codegen": "^0.20.0"
   },
   "config": {

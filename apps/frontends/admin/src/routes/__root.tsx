@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { Link, Outlet, createRootRoute } from "@tanstack/react-router"
+import { useEffect } from "react"
 import { getV1AuthMeOptions } from "@lib/api-client/generated/@tanstack/react-query.gen"
 
 export const Route = createRootRoute({
@@ -8,6 +9,18 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   const { data, isLoading, isError } = useQuery(getV1AuthMeOptions())
+  const user = data?.user ?? null
+  const unauthenticated = isError || user === null
+  const forbidden = user !== null && !user.isAdmin
+
+  // Navigating is a side effect, so it belongs in an effect rather than in render.
+  useEffect(() => {
+    if (unauthenticated) {
+      window.location.href = `${import.meta.env.VITE_NEXTJS_URL ?? ""}/login?next=${window.location.pathname}`
+    } else if (forbidden) {
+      window.location.href = `${import.meta.env.VITE_NEXTJS_URL ?? ""}/dashboard`
+    }
+  }, [unauthenticated, forbidden])
 
   if (isLoading) {
     return (
@@ -17,13 +30,7 @@ function RootLayout() {
     )
   }
 
-  if (isError || !data?.user) {
-    window.location.href = `${import.meta.env.VITE_NEXTJS_URL ?? ""}/login?next=${window.location.pathname}`
-    return null
-  }
-
-  if (!data.user.isAdmin) {
-    window.location.href = `${import.meta.env.VITE_NEXTJS_URL ?? ""}/dashboard`
+  if (unauthenticated || forbidden) {
     return null
   }
 

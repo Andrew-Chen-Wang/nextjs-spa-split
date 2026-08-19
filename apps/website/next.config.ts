@@ -6,10 +6,6 @@ const nextConfig: NextConfig = {
   // Links routinely point at SPA routes served through the proxy (e.g. /dashboard),
   // which typed routes would reject as unknown Next.js routes
   typedRoutes: false,
-  // TypeScript 7 has no JS compiler API yet; run type checking through the tsc CLI
-  experimental: {
-    useTypeScriptCli: true,
-  },
   transpilePackages: ["@template-nextjs/db", "@ui/base", "@ui/seo-shared", "@lib/api-client"],
   turbopack: {
     root: path.join(__dirname, "..", ".."),
