@@ -26,6 +26,14 @@ lefthook install
 pnpm run dev
 ```
 
+`pnpm run dev` starts four processes: the Next.js website on `:3000`, the Hono API on `:3001`,
+and the dashboard and admin SPAs on `:3002` and `:3003`.
+
+The API is a separate deployment (see [Splitting the API out of Next.js](#splitting-the-api-out-of-nextjs)),
+so it gets its own Vercel project: point the project's Root Directory at `apps/internal-api`,
+enable _Include files outside the Root Directory_, and set `DATABASE_URL`, `COOKIE_DOMAIN`,
+`NEXT_PUBLIC_API_URL`, and `VERCEL_EXPERIMENTAL_BACKENDS=1`.
+
 Production configuration is also set up via OpenTofu (see the [tofu](./tofu) directory).
 It simply sets up IAM permission to deploy the SPA assets to an S3 bucket, and the smart
 deployment happens in GitHub Actions with IAM + GitHub Actions OIDC.
@@ -57,6 +65,38 @@ To make sure the user is authenticated on initial load and to continue using
 session cookies, the initial loading of the page still goes through Next.js.
 After that, we redirect the user to the proper endpoint: either an unprotected
 page for login or the SPA.
+
+## Splitting the API out of Next.js
+
+The Hono API used to be mounted inside Next.js at `app/api/[[...route]]/route.ts`, which meant
+every API request was a Next.js Vercel Function invocation. The API and the marketing site scale
+very differently, and there is no reason to pay Next.js compute prices for JSON endpoints. So
+`apps/internal-api` is now its own deployment — Vercel's zero-config Hono backend, which picks up
+the default export of `src/index.ts` — served from `api.domain.com`.
+
+`apps/website` keeps only what genuinely belongs to it: SEO pages, the OAuth login flow, and
+`src/proxy.ts`, which still validates the session against Postgres directly (not by calling the
+API) before rewriting authenticated traffic to a SPA.
+
+Splitting the API onto its own host means the browser now makes cross-origin calls, so two things
+have to line up:
+
+1. **CORS.** The API allowlists the apex domain and its subdomains with `credentials: true`
+   (`apps/internal-api/src/index.ts`). Without `credentials`, the browser will not attach the
+   session cookie at all.
+2. **The cookie `Domain` flag.** The website sets the `session` cookie; a cookie set for
+   `domain.com` is _not_ sent to `api.domain.com` unless it carries an explicit
+   `Domain=.domain.com`. That is what the `COOKIE_DOMAIN` env var is for. It must stay **unset
+   locally** — `localhost:3000` and `localhost:3001` are the same host as far as cookies are
+   concerned, since cookies ignore ports.
+
+`SameSite=lax` still works across the split: `domain.com` and `api.domain.com` share a
+registrable domain, so the requests are cross-_origin_ but same-_site_.
+
+The generated API client (`lib/typescript/api-client`) hardcodes the API base URL rather than
+reading it from an env var. That is deliberate: the same module is consumed by both Next.js and
+the Vite SPAs, and `NEXT_PUBLIC_*` inlining does not reach a Vite build. `NODE_ENV` is the one
+variable both bundlers replace statically.
 
 ## Alternatives
 

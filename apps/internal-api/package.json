@@ -15,9 +15,12 @@
     }
   ],
   "scripts": {
+    "dev": "NODE_ENV=development tsx watch src/dev-server.ts",
+    "build": "tsc -b",
     "generate-specs": "tsx src/index.ts --openapi > openapi.json"
   },
   "dependencies": {
+    "@hono/node-server": "^2.1.1",
     "@lib/dao": "workspace:*",
     "@oslojs/crypto": "catalog:",
     "@oslojs/encoding": "catalog:",
@@ -25,12 +28,16 @@
     "@template-nextjs/db": "workspace:*",
     "@utils/numbers": "workspace:*",
     "hono": "catalog:",
-    "hono-typebox-openapi": "^0.2.0",
+    "hono-typebox-openapi": "^0.2.1",
     "kysely": "catalog:",
     "typebox": "catalog:",
     "uuid": "catalog:"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "catalog:"
+    "@hey-api/openapi-ts": "catalog:",
+    "@types/node": "catalog:",
+    "@vercel/config": "^0.5.5",
+    "tsx": "^4.23.1",
+    "typescript": "catalog:"
   }
 }

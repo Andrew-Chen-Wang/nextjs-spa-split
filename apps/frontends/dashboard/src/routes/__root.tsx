@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { Link, Outlet, createRootRoute } from "@tanstack/react-router"
-import { getApiV1AuthMeOptions } from "@lib/api-client/generated/@tanstack/react-query.gen"
+import { getV1AuthMeOptions } from "@lib/api-client/generated/@tanstack/react-query.gen"
 
 export const Route = createRootRoute({
   component: RootLayout,
 })
 
 function RootLayout() {
-  const { data, isLoading, isError } = useQuery(getApiV1AuthMeOptions())
+  const { data, isLoading, isError } = useQuery(getV1AuthMeOptions())
 
   if (isLoading) {
     return (

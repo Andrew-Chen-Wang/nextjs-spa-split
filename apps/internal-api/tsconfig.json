@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["esnext"],
+    "types": ["node"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -26,6 +27,6 @@
     "declaration": true
   },
   "include": ["**/*.ts", "**/*.json"],
-  "exclude": ["node_modules", "build"],
+  "exclude": ["node_modules", "build", "openapi.json", "**/*.test.ts"],
   "references": [{ "path": "../../packages/db" }, { "path": "../../lib/typescript/dao" }]
 }

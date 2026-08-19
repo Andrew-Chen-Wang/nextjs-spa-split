@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query"
 import { Button } from "@ui/base/ui/button"
 import { Checkbox } from "@ui/base/ui/checkbox"
 import { Label } from "@ui/base/ui/label"
-import { postApiV1AuthLogoutMutation } from "@lib/api-client/generated/@tanstack/react-query.gen"
+import { postV1AuthLogoutMutation } from "@lib/api-client/generated/@tanstack/react-query.gen"
 import { createFileRoute } from "@tanstack/react-router"
 import { useCallback } from "react"
 
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/settings")({
 
 function SettingsPage() {
   const logoutMutation = useMutation({
-    ...postApiV1AuthLogoutMutation(),
+    ...postV1AuthLogoutMutation(),
     onSuccess: () => {
       window.location.href = `${import.meta.env.VITE_NEXTJS_URL ?? ""}/`
     },

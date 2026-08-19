@@ -6,6 +6,15 @@ import type { Selectable } from "kysely"
 import { cookies } from "next/headers"
 import { cache } from "react"
 
+/** Cookie `Domain` for the session cookie, e.g. `.example.com`.
+ *
+ *  Left unset in development: the website (:3000) and the API (:3001) share the `localhost`
+ *  host, and cookies ignore ports, so a host-only cookie already reaches both. In production
+ *  they live on different hosts (`example.com` and `api.example.com`), so the cookie needs an
+ *  explicit parent domain — with the leading dot — to be sent to the API. */
+const configuredCookieDomain = process.env.COOKIE_DOMAIN?.trim()
+export const COOKIE_DOMAIN = configuredCookieDomain === "" ? undefined : configuredCookieDomain
+
 export function generateSessionToken(): string {
   const bytes = new Uint8Array(20)
   crypto.getRandomValues(bytes)
@@ -50,6 +59,7 @@ export async function setSessionTokenCookie(token: string, expiresAt: Date): Pro
     secure: process.env.NODE_ENV === "production",
     expires: expiresAt,
     path: "/",
+    domain: COOKIE_DOMAIN,
   })
 }
 
@@ -61,6 +71,7 @@ export async function deleteSessionTokenCookie(): Promise<void> {
     secure: process.env.NODE_ENV === "production",
     maxAge: 0,
     path: "/",
+    domain: COOKIE_DOMAIN,
   })
 }
 
