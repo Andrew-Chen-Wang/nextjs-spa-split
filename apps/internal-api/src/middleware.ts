@@ -1,8 +1,7 @@
 import { authUser } from "@lib/dao"
-import { sha256 } from "@oslojs/crypto/sha2"
-import { encodeHexLowerCase } from "@oslojs/encoding"
 import type { DB } from "@template-nextjs/db"
 import { db } from "@template-nextjs/db"
+import { encodeHexLowerCase, sha256Utf8 } from "@utils/crypto"
 import type { Context } from "hono"
 import { getCookie } from "hono/cookie"
 import { createMiddleware } from "hono/factory"
@@ -26,7 +25,8 @@ export async function getSession(
     throwHTTPException(401, ErrorCode.Unauthenticated, "Unauthenticated")
   }
 
-  const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(sessionToken)))
+  // The session table stores the hash of the token, not the token itself.
+  const sessionId = encodeHexLowerCase(await sha256Utf8(sessionToken))
   let session: Awaited<ReturnType<ReturnType<typeof authUser>["validateSessionToken"]>>
   try {
     session = await authUser(db).validateSessionToken(sessionId)
