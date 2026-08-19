@@ -270,7 +270,7 @@ import resourceName from "./resource-name"
 
 ## SSE / Streaming Endpoints
 
-Endpoints that return `text/event-stream` (SSE) must be excluded from the OpenAPI client generation config at `apps/website/.config/openapi-ts.config.ts`. Add the operation ID to the `parser.filters.operations.exclude` array so `@hey-api/openapi-ts` skips them — the generated client cannot handle streaming responses.
+Endpoints that return `text/event-stream` (SSE) must be excluded from the OpenAPI client generation config at `.config/openapi-ts.config.ts`. Add the operation ID to the `parser.filters.operations.exclude` array so `@hey-api/openapi-ts` skips them — the generated client cannot handle streaming responses.
 
 ## Error Response Format
 

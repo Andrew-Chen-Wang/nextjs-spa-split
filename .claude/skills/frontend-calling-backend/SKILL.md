@@ -7,18 +7,21 @@ The frontend calls the backend via a type-safe generated client. The backend (Ho
 
 ## Generating the Client
 
-**Prerequisites:** The internal API server must be running locally at `http://localhost:3000`.
+**Prerequisites:** The internal API server must be running locally at `http://localhost:3001`
+(`pnpm run dev --filter=@api/internal`, or just `pnpm run dev` for the whole stack). It is a
+standalone Hono app, not mounted inside Next.js.
 
 ```bash
-cd apps/website
-pnpm run openapi
+pnpm --filter=@lib/api-client run openapi         # public API
+pnpm --filter=@lib/api-client run openapi:admin   # admin API
 ```
 
-This runs `openapi-ts` using the config at `.config/openapi-ts.config.ts`, which:
+These run `openapi-ts` using the configs at `.config/openapi-ts.config.ts` and
+`.config/openapi-ts.admin.config.ts`, which:
 
-1. Fetches the OpenAPI spec from `http://localhost:3000/api/openapi`
-2. Generates output to `apps/website/src/services/client/`
-3. Runs `pnpm run lint` to format the generated files
+1. Fetch the OpenAPI spec from `http://localhost:3001/openapi` (and `/admin-openapi`)
+2. Generate output to `lib/typescript/api-client/src/generated/` (and `src/admin-generated/`)
+3. Run `pnpm run format` on the generated files
 
 ### What Gets Generated
 
@@ -26,13 +29,13 @@ This runs `openapi-ts` using the config at `.config/openapi-ts.config.ts`, which
 | ------------------------------ | --------------------------------------------------------------- |
 | `types.gen.ts`                 | Request/response TypeScript types for every endpoint            |
 | `sdk.gen.ts`                   | SDK functions for calling each endpoint                         |
-| `client.gen.ts`                | Pre-configured fetch client (base URL: `http://localhost:3000`) |
+| `client.gen.ts`                | Pre-configured fetch client (base URL: `http://localhost:3001`) |
 | `@tanstack/react-query.gen.ts` | `queryOptions` and `mutationOptions` factories for React Query  |
 | `transformers.gen.ts`          | Response transformers (e.g., date string to Date)               |
 
 ### When to Regenerate
 
-Run `pnpm run openapi` in `apps/website` whenever:
+Run the commands above whenever:
 
 - A new API route is added or removed
 - Request/response schemas change
@@ -42,14 +45,22 @@ Run `pnpm run openapi` in `apps/website` whenever:
 
 ### Config Reference
 
-The hey-api config is at `.config/openapi-ts.config.ts`. Key settings:
+The hey-api configs are at `.config/openapi-ts.config.ts` and `.config/openapi-ts.admin.config.ts`. Key settings:
 
 - **Plugins**: `@hey-api/client-fetch`, `@tanstack/react-query` (with `queryKeys` and `mutationOptions`), `@hey-api/typescript`, `@hey-api/transformers`, `@hey-api/sdk`
-- **Excluded operations**: Some streaming chat endpoints are excluded from generation (see `parser.filters.operations`)
+
+The two specs are split by route prefix on the API side: `/openapi` excludes `/admin/**`, and
+`/admin-openapi` includes only `/admin/**`.
+
+### Base URL and credentials
+
+`lib/typescript/api-client/src/index.ts` points both clients at the standalone API
+(`http://localhost:3001` in dev) with `credentials: "include"`. That flag is required: the API
+is a different origin from the website, and the session cookie only rides along with it.
 
 ## Usage in React
 
-All examples use TanStack Query v5. Import hooks from `@website/services/client/@tanstack/react-query.gen`.
+All examples use TanStack Query v5. Import hooks from `@lib/api-client/generated/@tanstack/react-query.gen`.
 
 ### Fetching Data (GET)
 
@@ -57,11 +68,11 @@ All examples use TanStack Query v5. Import hooks from `@website/services/client/
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { getApiV1CompanyJobPostingOptions } from "@website/services/client/@tanstack/react-query.gen"
+import { getV1CompanyJobPostingOptions } from "@lib/api-client/generated/@tanstack/react-query.gen"
 
 export function JobsList({ companyId }: { companyId: string }) {
   const { data, isLoading } = useQuery({
-    ...getApiV1CompanyJobPostingOptions({ query: { id: companyId } }),
+    ...getV1CompanyJobPostingOptions({ query: { id: companyId } }),
   })
 
   if (isLoading) return <div>Loading...</div>
@@ -85,19 +96,19 @@ The `*Options()` functions return `{ queryKey, queryFn }` — spread them into `
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import {
-  getApiV1CompanyJobPostingOptions,
-  postApiV1CompanyJobPostingMutation,
-} from "@website/services/client/@tanstack/react-query.gen"
+  getV1CompanyJobPostingOptions,
+  postV1CompanyJobPostingMutation,
+} from "@lib/api-client/generated/@tanstack/react-query.gen"
 
 export function CreateJobButton({ companyId }: { companyId: string }) {
   const queryClient = useQueryClient()
 
   const createJob = useMutation({
-    ...postApiV1CompanyJobPostingMutation(),
+    ...postV1CompanyJobPostingMutation(),
     onSuccess: () => {
       // Invalidate the related query to refetch
       void queryClient.invalidateQueries({
-        queryKey: getApiV1CompanyJobPostingOptions({ query: { id: companyId } }).queryKey,
+        queryKey: getV1CompanyJobPostingOptions({ query: { id: companyId } }).queryKey,
       })
     },
   })
@@ -126,11 +137,11 @@ Example for a DELETE with path params:
 
 ```typescript
 // In types.gen.ts:
-export type DeleteApiV1FriendByIdDeleteSentInviteData = {
+export type DeleteV1FriendByIdDeleteSentInviteData = {
   body?: never
   path: { id: string }
   query?: never
-  url: "/api/v1/friend/{id}/delete-sent-invite"
+  url: "/v1/friend/{id}/delete-sent-invite"
 }
 ```
 
@@ -146,6 +157,6 @@ Use the `*Options()` queryKey to invalidate after mutations:
 
 ```tsx
 void queryClient.invalidateQueries({
-  queryKey: getApiV1CompanyJobPostingOptions({ query: { id: companyId } }).queryKey,
+  queryKey: getV1CompanyJobPostingOptions({ query: { id: companyId } }).queryKey,
 })
 ```

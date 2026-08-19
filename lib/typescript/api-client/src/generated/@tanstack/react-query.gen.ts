@@ -3,21 +3,16 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from "@tanstack/react-query"
 
 import { client } from "../client.gen"
-import {
-  deleteApiV1UserMeDelete,
-  getApiV1AuthMe,
-  type Options,
-  postApiV1AuthLogout,
-} from "../sdk.gen"
+import { deleteV1UserMeDelete, getV1AuthMe, type Options, postV1AuthLogout } from "../sdk.gen"
 import type {
-  DeleteApiV1UserMeDeleteData,
-  DeleteApiV1UserMeDeleteError,
-  DeleteApiV1UserMeDeleteResponse,
-  GetApiV1AuthMeData,
-  GetApiV1AuthMeResponse,
-  PostApiV1AuthLogoutData,
-  PostApiV1AuthLogoutError,
-  PostApiV1AuthLogoutResponse,
+  DeleteV1UserMeDeleteData,
+  DeleteV1UserMeDeleteError,
+  DeleteV1UserMeDeleteResponse,
+  GetV1AuthMeData,
+  GetV1AuthMeResponse,
+  PostV1AuthLogoutData,
+  PostV1AuthLogoutError,
+  PostV1AuthLogoutResponse,
 } from "../types.gen"
 
 export type QueryKey<TOptions extends Options> = [
@@ -37,7 +32,7 @@ const createQueryKey = <TOptions extends Options>(
   const params: QueryKey<TOptions>[0] = {
     _id: id,
     baseUrl: options?.baseUrl || (options?.client ?? client).getConfig().baseUrl,
-  }
+  } as QueryKey<TOptions>[0]
   if (infinite) {
     params._infinite = infinite
   }
@@ -59,18 +54,18 @@ const createQueryKey = <TOptions extends Options>(
   return [params]
 }
 
-export const getApiV1AuthMeQueryKey = (options?: Options<GetApiV1AuthMeData>) =>
-  createQueryKey("getApiV1AuthMe", options)
+export const getV1AuthMeQueryKey = (options?: Options<GetV1AuthMeData>) =>
+  createQueryKey("getV1AuthMe", options)
 
-export const getApiV1AuthMeOptions = (options?: Options<GetApiV1AuthMeData>) =>
+export const getV1AuthMeOptions = (options?: Options<GetV1AuthMeData>) =>
   queryOptions<
-    GetApiV1AuthMeResponse,
+    GetV1AuthMeResponse,
     DefaultError,
-    GetApiV1AuthMeResponse,
-    ReturnType<typeof getApiV1AuthMeQueryKey>
+    GetV1AuthMeResponse,
+    ReturnType<typeof getV1AuthMeQueryKey>
   >({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await getApiV1AuthMe({
+      const { data } = await getV1AuthMe({
         ...options,
         ...queryKey[0],
         signal,
@@ -78,23 +73,23 @@ export const getApiV1AuthMeOptions = (options?: Options<GetApiV1AuthMeData>) =>
       })
       return data
     },
-    queryKey: getApiV1AuthMeQueryKey(options),
+    queryKey: getV1AuthMeQueryKey(options),
   })
 
-export const postApiV1AuthLogoutMutation = (
-  options?: Partial<Options<PostApiV1AuthLogoutData>>,
+export const postV1AuthLogoutMutation = (
+  options?: Partial<Options<PostV1AuthLogoutData>>,
 ): UseMutationOptions<
-  PostApiV1AuthLogoutResponse,
-  PostApiV1AuthLogoutError,
-  Options<PostApiV1AuthLogoutData>
+  PostV1AuthLogoutResponse,
+  PostV1AuthLogoutError,
+  Options<PostV1AuthLogoutData>
 > => {
   const mutationOptions: UseMutationOptions<
-    PostApiV1AuthLogoutResponse,
-    PostApiV1AuthLogoutError,
-    Options<PostApiV1AuthLogoutData>
+    PostV1AuthLogoutResponse,
+    PostV1AuthLogoutError,
+    Options<PostV1AuthLogoutData>
   > = {
     mutationFn: async (fnOptions) => {
-      const { data } = await postApiV1AuthLogout({
+      const { data } = await postV1AuthLogout({
         ...options,
         ...fnOptions,
         throwOnError: true,
@@ -105,20 +100,20 @@ export const postApiV1AuthLogoutMutation = (
   return mutationOptions
 }
 
-export const deleteApiV1UserMeDeleteMutation = (
-  options?: Partial<Options<DeleteApiV1UserMeDeleteData>>,
+export const deleteV1UserMeDeleteMutation = (
+  options?: Partial<Options<DeleteV1UserMeDeleteData>>,
 ): UseMutationOptions<
-  DeleteApiV1UserMeDeleteResponse,
-  DeleteApiV1UserMeDeleteError,
-  Options<DeleteApiV1UserMeDeleteData>
+  DeleteV1UserMeDeleteResponse,
+  DeleteV1UserMeDeleteError,
+  Options<DeleteV1UserMeDeleteData>
 > => {
   const mutationOptions: UseMutationOptions<
-    DeleteApiV1UserMeDeleteResponse,
-    DeleteApiV1UserMeDeleteError,
-    Options<DeleteApiV1UserMeDeleteData>
+    DeleteV1UserMeDeleteResponse,
+    DeleteV1UserMeDeleteError,
+    Options<DeleteV1UserMeDeleteData>
   > = {
     mutationFn: async (fnOptions) => {
-      const { data } = await deleteApiV1UserMeDelete({
+      const { data } = await deleteV1UserMeDelete({
         ...options,
         ...fnOptions,
         throwOnError: true,

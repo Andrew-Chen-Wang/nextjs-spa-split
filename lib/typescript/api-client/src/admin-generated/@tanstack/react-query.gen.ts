@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions } from "@tanstack/react-query"
 
 import { client } from "../client.gen"
-import { getApiAdminUserTest, type Options } from "../sdk.gen"
-import type { GetApiAdminUserTestData, GetApiAdminUserTestResponse } from "../types.gen"
+import { getAdminUserTest, type Options } from "../sdk.gen"
+import type { GetAdminUserTestData, GetAdminUserTestResponse } from "../types.gen"
 
 export type QueryKey<TOptions extends Options> = [
   Pick<TOptions, "baseUrl" | "body" | "headers" | "path" | "query"> & {
@@ -23,7 +23,7 @@ const createQueryKey = <TOptions extends Options>(
   const params: QueryKey<TOptions>[0] = {
     _id: id,
     baseUrl: options?.baseUrl || (options?.client ?? client).getConfig().baseUrl,
-  }
+  } as QueryKey<TOptions>[0]
   if (infinite) {
     params._infinite = infinite
   }
@@ -45,21 +45,21 @@ const createQueryKey = <TOptions extends Options>(
   return [params]
 }
 
-export const getApiAdminUserTestQueryKey = (options?: Options<GetApiAdminUserTestData>) =>
-  createQueryKey("getApiAdminUserTest", options)
+export const getAdminUserTestQueryKey = (options?: Options<GetAdminUserTestData>) =>
+  createQueryKey("getAdminUserTest", options)
 
 /**
  * Get messages for a company job posting chat
  */
-export const getApiAdminUserTestOptions = (options?: Options<GetApiAdminUserTestData>) =>
+export const getAdminUserTestOptions = (options?: Options<GetAdminUserTestData>) =>
   queryOptions<
-    GetApiAdminUserTestResponse,
+    GetAdminUserTestResponse,
     DefaultError,
-    GetApiAdminUserTestResponse,
-    ReturnType<typeof getApiAdminUserTestQueryKey>
+    GetAdminUserTestResponse,
+    ReturnType<typeof getAdminUserTestQueryKey>
   >({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await getApiAdminUserTest({
+      const { data } = await getAdminUserTest({
         ...options,
         ...queryKey[0],
         signal,
@@ -67,5 +67,5 @@ export const getApiAdminUserTestOptions = (options?: Options<GetApiAdminUserTest
       })
       return data
     },
-    queryKey: getApiAdminUserTestQueryKey(options),
+    queryKey: getAdminUserTestQueryKey(options),
   })
